@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Consulta y Estudio Teológico del Nuevo Testamento</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            study: {
+              midnight: '#16222f',
+              night: '#101720',
+              deep: '#1d2c3d',
+              navy: '#22364c',
+              border: '#dcd4c3',
+              borderDark: '#2c3d52',
+              parchment: '#fbf8f1',
+              parchmentAlt: '#f3ece0',
+              gold: '#b38728',
+              goldHover: '#8f6a1e',
+              goldLight: '#e4c47b',
+              wine: '#802b2b',
+              ink: '#232931',
+              muted: '#5c6470'
+            }
+          },
+          fontFamily: {
+            serif: ['"Merriweather"', 'Georgia', 'serif'],
+            sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Cinzel"', '"Merriweather"', 'serif'],
+            greek: ['"Cardo"', '"Times New Roman"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .font-serif-body {
+      font-family: 'Merriweather', Georgia, serif;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.05);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #b38728;
+      border-radius: 3px;
+    }
+    @media print {
+      header, nav, #quick-search-box, .no-print {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .print-full {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-study-parchment text-study-ink dark:bg-study-night dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- CABECERA PRINCIPAL -->
+  <header class="bg-study-midnight text-study-parchment border-b-2 border-study-gold sticky top-0 z-40 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo e Identidad -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTab('biblioteca')">
+          <div class="w-11 h-11 rounded-lg bg-study-deep border border-study-gold/70 flex items-center justify-center text-study-gold shadow-inner">
+            <i class="fa-solid fa-book-open-reader text-xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold tracking-widest uppercase text-study-gold font-display">Herramienta Didáctica y Consulta</span>
+              <span class="text-[9px] bg-study-gold/20 text-yellow-200 px-1.5 py-0.5 rounded border border-study-gold/40 hidden sm:inline-block">Basado en D. Marguerat</span>
+            </div>
+            <h1 class="text-base sm:text-lg font-bold font-serif text-white tracking-tight">
+              Teología del Nuevo Testamento
+            </h1>
+          </div>
+        </div>
+
+        <!-- Navegación Principal -->
+        <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold uppercase tracking-wider">
+          <button onclick="navigateTab('biblioteca')" id="tab-btn-biblioteca" class="tab-nav px-3 py-2 rounded-md transition text-study-gold bg-study-deep border border-study-gold/40">
+            <i class="fa-solid fa-layer-group mr-1.5"></i> Biblioteca de Libros
+          </button>
+          <button onclick="navigateTab('matriz')" id="tab-btn-matriz" class="tab-nav px-3 py-2 rounded-md transition text-gray-300 hover:text-study-gold hover:bg-study-deep">
+            <i class="fa-solid fa-table-columns mr-1.5"></i> Matriz Temática
+          </button>
+          <button onclick="navigateTab('aula')" id="tab-btn-aula" class="tab-nav px-3 py-2 rounded-md transition text-gray-300 hover:text-study-gold hover:bg-study-deep">
+            <i class="fa-solid fa-chalkboard-user mr-1.5"></i> Taller de Clase
+          </button>
+          <button onclick="navigateTab('glosario')" id="tab-btn-glosario" class="tab-nav px-3 py-2 rounded-md transition text-gray-300 hover:text-study-gold hover:bg-study-deep">
+            <i class="fa-solid fa-spell-check mr-1.5"></i> Glosario de Conceptos
+          </button>
+          <button onclick="navigateTab('cuaderno')" id="tab-btn-cuaderno" class="tab-nav px-3 py-2 rounded-md transition text-gray-300 hover:text-study-gold hover:bg-study-deep">
+            <i class="fa-solid fa-pen-nib mr-1.5"></i> Mi Cuaderno
+          </button>
+        </nav>
+
+        <!-- Utilidades: Accesibilidad & Búsqueda -->
+        <div class="flex items-center space-x-2">
+          <!-- Modo Oscuro / Claro -->
+          <button onclick="toggleDarkMode()" class="p-2 text-study-gold hover:text-white rounded-lg bg-study-deep border border-study-borderDark transition" title="Alternar Modo Oscuro/Claro">
+            <i id="theme-icon" class="fa-solid fa-moon"></i>
+          </button>
+
+          <!-- Ajuste de Fuente -->
+          <div class="hidden sm:flex items-center bg-study-deep rounded-lg border border-study-borderDark p-0.5 text-xs">
+            <button onclick="adjustFontSize(-1)" class="px-2 py-1 text-gray-300 hover:text-study-gold" title="Reducir letra">A-</button>
+            <button onclick="adjustFontSize(1)" class="px-2 py-1 text-gray-300 hover:text-study-gold" title="Aumentar letra">A+</button>
+          </div>
+
+          <!-- Botón Menú Móvil -->
+          <button onclick="toggleMobileNav()" class="md:hidden p-2 text-gray-200 hover:text-study-gold">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menú Responsive Móvil -->
+    <div id="mobile-nav" class="hidden md:hidden bg-study-deep border-t border-study-borderDark px-4 py-3 space-y-1 text-sm font-medium">
+      <button onclick="navigateTab('biblioteca'); toggleMobileNav()" class="w-full text-left px-3 py-2 rounded text-study-gold hover:bg-study-midnight flex items-center">
+        <i class="fa-solid fa-layer-group w-6 text-center mr-2"></i> Biblioteca de Libros
+      </button>
+      <button onclick="navigateTab('matriz'); toggleMobileNav()" class="w-full text-left px-3 py-2 rounded text-gray-200 hover:bg-study-midnight flex items-center">
+        <i class="fa-solid fa-table-columns w-6 text-center mr-2"></i> Matriz Temática
+      </button>
+      <button onclick="navigateTab('aula'); toggleMobileNav()" class="w-full text-left px-3 py-2 rounded text-gray-200 hover:bg-study-midnight flex items-center">
+        <i class="fa-solid fa-chalkboard-user w-6 text-center mr-2"></i> Taller de Clase
+      </button>
+      <button onclick="navigateTab('glosario'); toggleMobileNav()" class="w-full text-left px-3 py-2 rounded text-gray-200 hover:bg-study-midnight flex items-center">
+        <i class="fa-solid fa-spell-check w-6 text-center mr-2"></i> Glosario de Conceptos
+      </button>
+      <button onclick="navigateTab('cuaderno'); toggleMobileNav()" class="w-full text-left px-3 py-2 rounded text-gray-200 hover:bg-study-midnight flex items-center">
+        <i class="fa-solid fa-pen-nib w-6 text-center mr-2"></i> Mi Cuaderno de Estudio
+      </button>
+    </div>
+  </header>
+
+  <!-- BANNER PEDAGÓGICO DE BIENVENIDA -->
+  <section class="bg-gradient-to-r from-study-midnight via-study-deep to-study-navy text-study-parchment py-8 px-4 sm:px-6 lg:px-8 border-b border-study-gold/30">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center md:text-left">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-study-gold/20 border border-study-gold/40 text-xs font-semibold text-study-gold">
+          <i class="fa-solid fa-seedling"></i> Formación Bíblica Abierta y Comprensible
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+          Comprender el Mensaje Teológico del Nuevo Testamento
+        </h2>
+        <p class="font-serif-body text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed">
+          Cada escrito del Nuevo Testamento responde a preguntas vivas de comunidades reales. Esta herramienta explica de forma diáfana el núcleo teológico de cada libro, sus acuerdos de fondo y sus matices propios sin tecnicismos innecesarios.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2 justify-center">
+        <button onclick="quickTour()" class="px-4 py-2 bg-study-gold text-study-midnight font-bold text-xs rounded-lg shadow hover:bg-study-goldLight transition flex items-center gap-2">
+          <i class="fa-solid fa-compass"></i> ¿Cómo usar esta guía?
+        </button>
+        <button onclick="navigateTab('aula')" class="px-4 py-2 bg-study-deep border border-study-gold/40 text-study-gold font-bold text-xs rounded-lg hover:bg-study-midnight transition flex items-center gap-2">
+          <i class="fa-solid fa-users"></i> Recursos para Docentes/Líderes
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENIDO PRINCIPAL DINÁMICO -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6" id="main-content-area">
+
+    <!-- SECCIÓN 1: BIBLIOTECA DE LIBROS -->
+    <div id="section-biblioteca" class="tab-pane space-y-6">
+      <!-- Buscador y Filtros -->
+      <div class="bg-white dark:bg-study-deep p-4 sm:p-5 rounded-xl border border-study-border dark:border-study-borderDark shadow-sm space-y-3" id="quick-search-box">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-grow">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input type="text" id="searchInput" oninput="filterBooks()" placeholder="Busca un libro, tema o palabra clave (ej. cruz, justificación, dinero, resurrección, ley, amor)..." 
+                   class="w-full pl-10 pr-4 py-2 text-sm bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark rounded-lg focus:outline-none focus:ring-2 focus:ring-study-gold font-medium">
+          </div>
+          <button onclick="resetFilters()" class="px-3 py-2 text-xs font-semibold text-study-muted dark:text-gray-300 hover:text-study-gold border border-study-border dark:border-study-borderDark rounded-lg hover:bg-study-parchment dark:hover:bg-study-midnight transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Restablecer
+          </button>
+        </div>
+
+        <!-- Filtro por Familias de Libros -->
+        <div class="flex flex-wrap items-center gap-1.5 text-xs pt-1 border-t border-gray-100 dark:border-study-borderDark">
+          <span class="font-bold text-study-muted dark:text-gray-300 mr-2"><i class="fa-solid fa-filter mr-1"></i> Categorías:</span>
+          <button onclick="filterCategory('all')" class="cat-pill active px-3 py-1 rounded-full border border-study-gold bg-study-gold text-study-midnight font-bold transition">Todos (21 Escritos)</button>
+          <button onclick="filterCategory('sinopticos')" class="cat-pill px-3 py-1 rounded-full border border-study-border dark:border-study-borderDark bg-white dark:bg-study-midnight text-gray-700 dark:text-gray-200 hover:border-study-gold transition">Evangelios & Hechos</button>
+          <button onclick="filterCategory('cartas-pablo')" class="cat-pill px-3 py-1 rounded-full border border-study-border dark:border-study-borderDark bg-white dark:bg-study-midnight text-gray-700 dark:text-gray-200 hover:border-study-gold transition">Grandes Cartas de Pablo</button>
+          <button onclick="filterCategory('deuteropaulinas')" class="cat-pill px-3 py-1 rounded-full border border-study-border dark:border-study-borderDark bg-white dark:bg-study-midnight text-gray-700 dark:text-gray-200 hover:border-study-gold transition">Colosenses, Efesios & Pastorales</button>
+          <button onclick="filterCategory('hebreos-juan-apocalipsis')" class="cat-pill px-3 py-1 rounded-full border border-study-border dark:border-study-borderDark bg-white dark:bg-study-midnight text-gray-700 dark:text-gray-200 hover:border-study-gold transition">Hebreos, Juan & Apocalipsis</button>
+          <button onclick="filterCategory('cartas-catolicas')" class="cat-pill px-3 py-1 rounded-full border border-study-border dark:border-study-borderDark bg-white dark:bg-study-midnight text-gray-700 dark:text-gray-200 hover:border-study-gold transition">Cartas Católicas (St, Pe, Jd)</button>
+        </div>
+      </div>
+
+      <!-- Cuadrícula de Tarjetas de Libros -->
+      <div id="booksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Renderizado dinámico vía JavaScript -->
+      </div>
+      
+      <!-- Mensaje cuando no hay resultados -->
+      <div id="emptyResults" class="hidden text-center py-12 bg-white dark:bg-study-deep rounded-xl border border-dashed border-study-border dark:border-study-borderDark">
+        <i class="fa-solid fa-book-bookmark text-4xl text-study-gold mb-3"></i>
+        <h3 class="text-base font-bold text-gray-700 dark:text-gray-200">No encontramos coincidencias para esa búsqueda</h3>
+        <p class="text-xs text-study-muted dark:text-gray-400 mt-1">Prueba con palabras sencillas como: gracia, fe, sufrimiento, esperanza, iglesia, espíritu.</p>
+        <button onclick="resetFilters()" class="mt-4 px-4 py-1.5 bg-study-gold text-study-midnight font-bold rounded-lg text-xs">Ver todos los libros</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: MATRIZ TEMÁTICA COMPARATIVA -->
+    <div id="section-matriz" class="tab-pane hidden space-y-6">
+      <div class="bg-white dark:bg-study-deep p-6 rounded-xl border border-study-border dark:border-study-borderDark shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-study-border dark:border-study-borderDark pb-4">
+          <div>
+            <span class="text-xs font-bold text-study-gold uppercase tracking-wider">Visión de Conjunto</span>
+            <h3 class="text-xl font-serif font-bold text-study-midnight dark:text-white">Matriz Temática Comparativa</h3>
+            <p class="text-xs text-study-muted dark:text-gray-300 font-serif-body mt-0.5">Compara de un vistazo cómo abordan los distintos autores del Nuevo Testamento los temas fundamentales.</p>
+          </div>
+          <!-- Selector de Eje -->
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-bold text-gray-600 dark:text-gray-300">Seleccionar Eje:</label>
+            <select id="matrixThemeSelect" onchange="renderMatrixTable(this.value)" class="text-xs font-semibold bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-study-gold">
+              <option value="ley">1. La Ley (Torá), las Obras y la Gracia</option>
+              <option value="cristo">2. Quién es Jesucristo (Cristología)</option>
+              <option value="escatologia">3. El Futuro, la Resurrección y la Esperanza</option>
+              <option value="iglesia">4. La Comunidad Cristiana y los Ministerios</option>
+              <option value="sociedad">5. La Sociedad, los Pobres y el Poder</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tabla Comparativa Dinámica -->
+        <div class="overflow-x-auto custom-scroll border border-study-border dark:border-study-borderDark rounded-lg">
+          <table class="w-full text-left text-xs" id="matrixComparisonTable">
+            <!-- Renderizado dinámico -->
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: TALLER DE CLASE / GUÍA DOCENTE -->
+    <div id="section-aula" class="tab-pane hidden space-y-6">
+      <div class="bg-white dark:bg-study-deep p-6 rounded-xl border border-study-border dark:border-study-borderDark shadow-sm space-y-6">
+        <div class="border-b border-study-border dark:border-study-borderDark pb-4">
+          <span class="text-xs font-bold text-study-gold uppercase tracking-wider">Herramientas Didácticas</span>
+          <h3 class="text-xl font-serif font-bold text-study-midnight dark:text-white">Taller de Clase y Dinámicas de Grupo</h3>
+          <p class="text-xs text-study-muted dark:text-gray-300 font-serif-body mt-0.5">Pensado para profesores, facilitadores de comunidades de base y grupos de estudio bíblico.</p>
+        </div>
+
+        <!-- Bloques del Taller -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Tarjeta 1: Preguntas de Debate -->
+          <div class="p-4 rounded-xl bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="w-9 h-9 rounded-lg bg-study-gold/20 text-study-gold flex items-center justify-center font-bold">
+                <i class="fa-solid fa-comments"></i>
+              </div>
+              <h4 class="font-serif font-bold text-sm text-study-midnight dark:text-white">Preguntas para Diálogo Grupal</h4>
+              <p class="text-xs text-study-muted dark:text-gray-300 font-serif-body leading-relaxed">
+                Interrogantes provocativos para dinamizar una sesión de clase, confrontando perspectivas diversas dentro del Nuevo Testamento.
+              </p>
+              <ul class="text-[11px] space-y-1.5 text-gray-700 dark:text-gray-300 list-disc list-inside">
+                <li>¿Se contradicen Pablo y Santiago sobre la fe y las obras?</li>
+                <li>¿Por qué Marcos enfatiza el silencio y la cruz más que la gloria?</li>
+                <li>¿Cómo dialoga Lucas con el poder político frente a Apocalipsis?</li>
+              </ul>
+            </div>
+            <button onclick="openWorkshopModal('debates')" class="mt-4 w-full py-1.5 text-xs font-bold bg-study-deep text-study-gold hover:bg-study-midnight rounded border border-study-gold/40 transition">Ver 10 Preguntas de Debate</button>
+          </div>
+
+          <!-- Tarjeta 2: Resúmenes en una Frase -->
+          <div class="p-4 rounded-xl bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="w-9 h-9 rounded-lg bg-study-gold/20 text-study-gold flex items-center justify-center font-bold">
+                <i class="fa-solid fa-lightbulb"></i>
+              </div>
+              <h4 class="font-serif font-bold text-sm text-study-midnight dark:text-white">Síntesis Mnemotécnicas</h4>
+              <p class="text-xs text-study-muted dark:text-gray-300 font-serif-body leading-relaxed">
+                El corazón teológico de cada libro resumido en una frase pedagógica contundente para recordar fácilmente y enseñar en clase.
+              </p>
+              <div class="p-2.5 bg-white dark:bg-study-deep rounded border border-study-border dark:border-study-borderDark text-[11px] italic font-serif-body text-study-wine dark:text-yellow-200">
+                «En Marcos, Dios se da a conocer en el abandono de la cruz, no en el aplauso del mundo».
+              </div>
+            </div>
+            <button onclick="openWorkshopModal('frases')" class="mt-4 w-full py-1.5 text-xs font-bold bg-study-deep text-study-gold hover:bg-study-midnight rounded border border-study-gold/40 transition">Ver Frases Clave de los 21 Libros</button>
+          </div>
+
+          <!-- Tarjeta 3: Ejercicios de Aplicación Vital -->
+          <div class="p-4 rounded-xl bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="w-9 h-9 rounded-lg bg-study-gold/20 text-study-gold flex items-center justify-center font-bold">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+              </div>
+              <h4 class="font-serif font-bold text-sm text-study-midnight dark:text-white">Aplicación Comunitaria y Personal</h4>
+              <p class="text-xs text-study-muted dark:text-gray-300 font-serif-body leading-relaxed">
+                Talleres prácticos para aterrizar la teología bíblica en la vida diaria, el trabajo con comunidades vulnerables y la ética personal.
+              </p>
+              <ul class="text-[11px] space-y-1.5 text-gray-700 dark:text-gray-300 list-disc list-inside">
+                <li>El uso del dinero según Lucas y Santiago.</li>
+                <li>La hospitalidad y la inclusión fraterna en Filemón.</li>
+                <li>Vivir con esperanza ante el dolor según 1 Pedro.</li>
+              </ul>
+            </div>
+            <button onclick="openWorkshopModal('ejercicios')" class="mt-4 w-full py-1.5 text-xs font-bold bg-study-deep text-study-gold hover:bg-study-midnight rounded border border-study-gold/40 transition">Ver Guías de Aplicación</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4: GLOSARIO DE CONCEPTOS TEOLÓGICOS -->
+    <div id="section-glosario" class="tab-pane hidden space-y-6">
+      <div class="bg-white dark:bg-study-deep p-6 rounded-xl border border-study-border dark:border-study-borderDark shadow-sm space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-study-border dark:border-study-borderDark pb-4">
+          <div>
+            <span class="text-xs font-bold text-study-gold uppercase tracking-wider">Conceptos Fundamentales Explicados de Forma Sencilla</span>
+            <h3 class="text-xl font-serif font-bold text-study-midnight dark:text-white">Glosario Teológico Accesible</h3>
+            <p class="text-xs text-study-muted dark:text-gray-300 font-serif-body mt-0.5">Términos técnicos y palabras en griego bíblico (koiné) traducidas a un lenguaje cotidiano con ejemplos.</p>
+          </div>
+          <div class="relative w-full sm:w-64">
+            <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+            <input type="text" id="glossaryFilter" oninput="filterGlossaryCards()" placeholder="Filtrar concepto..." 
+                   class="w-full pl-8 pr-3 py-1.5 text-xs bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark rounded-lg focus:outline-none focus:ring-2 focus:ring-study-gold">
+          </div>
+        </div>
+
+        <!-- Tarjetas del Glosario -->
+        <div id="glossaryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Renderizado dinámico vía JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 5: MI CUADERNO DE ESTUDIO -->
+    <div id="section-cuaderno" class="tab-pane hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Editor de Notas -->
+        <div class="lg:col-span-2 bg-white dark:bg-study-deep p-6 rounded-xl border border-study-border dark:border-study-borderDark shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-study-border dark:border-study-borderDark pb-3">
+            <div>
+              <span class="text-xs font-bold text-study-gold uppercase tracking-wider">Estudio Personal y de Clase</span>
+              <h3 class="text-lg font-serif font-bold text-study-midnight dark:text-white">Cuaderno de Apuntes y Reflexión</h3>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="insertStudyTemplate()" class="px-2.5 py-1 text-xs bg-study-parchment dark:bg-study-midnight hover:bg-study-parchmentAlt border border-study-border dark:border-study-borderDark rounded text-study-midnight dark:text-gray-200 transition">
+                <i class="fa-solid fa-file-invoice mr-1"></i> Cargar Plantilla
+              </button>
+              <button onclick="exportCurrentNote()" class="px-2.5 py-1 text-xs bg-study-deep text-study-gold hover:bg-study-midnight rounded border border-study-gold/40 transition">
+                <i class="fa-solid fa-download mr-1"></i> Descargar
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <input type="text" id="noteSubject" placeholder="Tema o Libro estudiado (ej. La justificación en Romanos)..." 
+                   class="w-full px-3 py-2 text-sm font-bold bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark rounded-lg focus:outline-none focus:ring-2 focus:ring-study-gold">
+            <textarea id="noteText" rows="12" placeholder="Escribe aquí tus ideas, reflexiones personales, citas bíblicas o conclusiones para tu clase..." 
+                      class="w-full p-3.5 text-xs sm:text-sm font-serif-body leading-relaxed bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark rounded-lg focus:outline-none focus:ring-2 focus:ring-study-gold custom-scroll"></textarea>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-study-muted dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-study-borderDark">
+            <span id="noteStatus"><i class="fa-solid fa-floppy-disk mr-1"></i> Los apuntes se guardan en tu navegador</span>
+            <button onclick="saveCurrentNote()" class="px-4 py-1.5 bg-study-gold hover:bg-study-goldHover text-study-midnight font-bold rounded-lg transition shadow">
+              Guardar Nota
+            </button>
+          </div>
+        </div>
+
+        <!-- Lista de Apuntes Guardados & Bibliografía -->
+        <div class="space-y-5">
+          <div class="bg-white dark:bg-study-deep p-5 rounded-xl border border-study-border dark:border-study-borderDark shadow-sm space-y-3">
+            <div class="flex items-center justify-between border-b border-study-border dark:border-study-borderDark pb-2">
+              <h4 class="font-serif font-bold text-xs uppercase text-study-midnight dark:text-white">
+                <i class="fa-solid fa-folder-open text-study-gold mr-1.5"></i> Mis Notas Guardadas
+              </h4>
+              <button onclick="clearAllNotes()" class="text-[10px] text-study-wine hover:underline">Borrar todas</button>
+            </div>
+            <div id="savedNotesContainer" class="space-y-2 max-h-56 overflow-y-auto custom-scroll text-xs">
+              <!-- Renderizado dinámico -->
+            </div>
+          </div>
+
+          <!-- Cuadro de Referencia Pedagógica -->
+          <div class="bg-study-midnight text-study-parchment p-5 rounded-xl border border-study-gold/40 shadow-sm space-y-2.5">
+            <h4 class="font-serif font-bold text-xs uppercase text-study-gold tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-graduation-cap"></i> Fuente de Estudio
+            </h4>
+            <p class="text-xs text-gray-300 font-serif-body leading-relaxed">
+              Esta guía sistematiza rigurosamente los apartados teológicos de la obra clásica:
+            </p>
+            <div class="p-2.5 bg-study-deep/80 rounded border border-study-gold/30 text-[11px] text-gray-200">
+              <strong>Daniel Marguerat (dir.)</strong><br>
+              <em>Introducción al Nuevo Testamento: su historia, su escritura, su teología</em>.<br>
+              Bilbao: Editorial Desclée de Brouwer.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: FICHA COMPLETA DE ESTUDIO DEL LIBRO -->
+  <div id="bookModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-3 sm:p-5 backdrop-blur-sm">
+    <div class="bg-white dark:bg-study-deep rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl border-2 border-study-gold overflow-hidden">
+      <!-- Encabezado de la Ficha -->
+      <div class="bg-study-midnight text-study-parchment px-6 py-4 flex items-center justify-between border-b border-study-gold/50">
+        <div class="flex items-center space-x-3">
+          <div id="modalBookIcon" class="w-10 h-10 rounded-lg bg-study-deep border border-study-gold flex items-center justify-center text-study-gold text-lg">
+            <i class="fa-solid fa-scroll"></i>
+          </div>
+          <div>
+            <span id="modalBookCategory" class="text-[10px] font-bold uppercase tracking-wider text-study-gold"></span>
+            <h3 id="modalBookTitle" class="text-lg sm:text-xl font-serif font-bold text-white"></h3>
+          </div>
+        </div>
+        <button onclick="closeBookModal()" class="text-gray-300 hover:text-white p-2 rounded text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Navegación Interna de la Ficha -->
+      <div class="bg-study-parchment dark:bg-study-midnight border-b border-study-border dark:border-study-borderDark px-6 flex space-x-4 text-xs font-bold uppercase tracking-wider overflow-x-auto">
+        <button onclick="switchModalTab('resumen')" id="m-tab-resumen" class="modal-tab-btn py-3 border-b-2 border-study-gold text-study-midnight dark:text-study-gold">
+          <i class="fa-solid fa-compass mr-1"></i> Núcleo en Breve
+        </button>
+        <button onclick="switchModalTab('cristo')" id="m-tab-cristo" class="modal-tab-btn py-3 border-b-2 border-transparent text-study-muted dark:text-gray-400 hover:text-study-gold">
+          <i class="fa-solid fa-cross mr-1"></i> Jesucristo
+        </button>
+        <button onclick="switchModalTab('comunidad')" id="m-tab-comunidad" class="modal-tab-btn py-3 border-b-2 border-transparent text-study-muted dark:text-gray-400 hover:text-study-gold">
+          <i class="fa-solid fa-users mr-1"></i> Comunidad & Vida Ética
+        </button>
+        <button onclick="switchModalTab('pedagogia')" id="m-tab-pedagogia" class="modal-tab-btn py-3 border-b-2 border-transparent text-study-muted dark:text-gray-400 hover:text-study-gold">
+          <i class="fa-solid fa-lightbulb mr-1"></i> Para Clase & Reflexión
+        </button>
+      </div>
+
+      <!-- Contenido de la Ficha -->
+      <div class="p-6 overflow-y-auto custom-scroll flex-grow text-xs sm:text-sm font-serif-body text-study-ink dark:text-gray-200 leading-relaxed space-y-4" id="modalBookContent">
+        <!-- Inyección dinámica -->
+      </div>
+
+      <!-- Pie del Modal -->
+      <div class="bg-study-parchmentAlt dark:bg-study-midnight px-6 py-3 border-t border-study-border dark:border-study-borderDark flex flex-wrap items-center justify-between gap-2 text-xs">
+        <span id="modalBookRef" class="text-study-muted dark:text-gray-400 font-sans"></span>
+        <div class="flex gap-2">
+          <button onclick="copyCurrentBookText()" class="px-3 py-1 bg-white dark:bg-study-deep text-study-midnight dark:text-study-gold rounded border border-study-border dark:border-study-borderDark hover:border-study-gold transition flex items-center gap-1 font-semibold">
+            <i class="fa-regular fa-copy"></i> Copiar Ficha
+          </button>
+          <button onclick="printCurrentBook()" class="px-3 py-1 bg-study-gold text-study-midnight rounded font-bold hover:bg-study-goldLight transition flex items-center gap-1">
+            <i class="fa-solid fa-print"></i> Imprimir Ficha
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GUÍAS DEL TALLER DOCENTE -->
+  <div id="workshopModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white dark:bg-study-deep rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl border border-study-gold max-h-[85vh] overflow-y-auto custom-scroll">
+      <div class="flex items-center justify-between border-b border-study-border dark:border-study-borderDark pb-3">
+        <h3 id="workshopModalTitle" class="font-serif font-bold text-base text-study-midnight dark:text-white"></h3>
+        <button onclick="closeWorkshopModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-white text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div id="workshopModalBody" class="text-xs sm:text-sm font-serif-body leading-relaxed text-study-ink dark:text-gray-200 space-y-3">
+        <!-- Inyección dinámica -->
+      </div>
+      <div class="text-right pt-2 border-t border-study-border dark:border-study-borderDark">
+        <button onclick="closeWorkshopModal()" class="px-4 py-1.5 bg-study-gold text-study-midnight font-bold text-xs rounded-lg">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GUÍA DE USO RÁPIDO (TOUR) -->
+  <div id="tourModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white dark:bg-study-deep rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-study-gold">
+      <div class="flex items-center justify-between border-b border-study-border dark:border-study-borderDark pb-3">
+        <h3 class="font-serif font-bold text-base text-study-midnight dark:text-white flex items-center gap-2">
+          <i class="fa-solid fa-compass text-study-gold"></i> ¿Cómo sacar provecho a esta herramienta?
+        </h3>
+        <button onclick="closeTourModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-white">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="text-xs sm:text-sm font-serif-body leading-relaxed text-study-ink dark:text-gray-200 space-y-2.5">
+        <p><strong>1. Biblioteca Canónica:</strong> Haz clic en cualquier tarjeta para abrir su ficha completa con su mensaje central, cristología y puntos de diálogo.</p>
+        <p><strong>2. Matriz Temática:</strong> Utilízala en clase para mostrar que el Nuevo Testamento no es un bloque uniforme, sino un diálogo armónico con diversos acentos.</p>
+        <p><strong>3. Taller y Preguntas:</strong> Usa las preguntas de debate para motivar la participación de tus estudiantes o grupo bíblico.</p>
+        <p><strong>4. Glosario Accesible:</strong> Consulta el significado sencillo de palabras como <em>Paráclito</em>, <em>justificación</em> o <em>escatología</em>.</p>
+      </div>
+      <div class="text-right pt-2">
+        <button onclick="closeTourModal()" class="px-4 py-1.5 bg-study-midnight text-study-gold font-bold text-xs rounded-lg">Comenzar a Explorar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="bg-study-midnight text-study-parchment/80 border-t-2 border-study-gold py-6 px-4 text-xs text-center font-sans mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="font-serif font-bold text-study-gold">Guía Didáctica de Teología Bíblica del Nuevo Testamento</p>
+      <p class="text-[11px] text-gray-400">Diseñado como recurso abierto para el estudio personal, comunidades y docencia bíblica.</p>
+    </div>
+  </footer>
+
+  <!-- LÓGICA JAVASCRIPT Y BASE DE DATOS TEOLÓGICA -->
+  <script>
+    // DATOS COMPLETOS DE LOS 21 ESCRITOS ASIMILADOS
+    const booksData = [
+      // EVANGELIOS Y HECHOS
+      {
+        id: 'marcos',
+        title: 'Evangelio según Marcos',
+        category: 'sinopticos',
+        categoryLabel: 'Evangelios Sinópticos',
+        icon: 'fa-shoe-prints',
+        reference: 'D. Marguerat, pp. 54-60',
+        phrase: 'Jesús camina hacia la cruz: la verdadera identidad de Dios no se descubre en el poder ruidoso, sino en el amor que se entrega en el sufrimiento.',
+        keyPoints: [
+          'El "Cristo de las partidas": Jesús no se instala; siempre va de camino a las periferias y hacia Jerusalén.',
+          'Dos grandes desgarros marcan el libro: el cielo que se abre en el bautismo y el velo del templo que se rasga en la cruz.',
+          'El secreto mesiánico: nadie comprende plenamente a Jesús hasta que muere en la cruz.',
+          'Los discípulos fallan y tienen miedo; los marginados y un soldado pagano son quienes reconocen a Dios.'
+        ],
+        cristo: 'Marcos presenta a Jesús como el Hijo de Dios que camina en obediencia hacia la muerte. No busca admiración por milagros ni títulos gloriosos. De hecho, los demonios dan la respuesta correcta pero de modo perverso. La única persona en todo el evangelio que proclama con fe "verdaderamente este hombre era Hijo de Dios" es un centurión romano al pie de la cruz (Mc 15,39), en el momento de mayor aparente fracaso.',
+        comunidad: 'El seguimiento no es un camino de honores, sino de servicio (Mc 10,45). Marcos muestra con honestidad las dudas, miedos y emociones humanas de Jesús y de sus seguidores. Destaca el contraste: los amigos íntimos de Jesús huyen, mientras personajes humildes como el ciego Bartimeo dejan su manto para seguirle sin equipaje.',
+        pedagogia: '¿Por qué nos cuesta tanto ver a Dios en los momentos de dolor y fragilidad y preferimos solo imágenes de victoria fácil? ¿Qué significa para nuestra vida "dejar el manto" como Bartimeo para seguir a Jesús?',
+        glosarioRel: ['theologia-crucis', 'secreto-mesianico']
+      },
+      {
+        id: 'mateo',
+        title: 'Evangelio según Mateo',
+        category: 'sinopticos',
+        categoryLabel: 'Evangelios Sinópticos',
+        icon: 'fa-landmark',
+        reference: 'D. Marguerat, pp. 74-80',
+        phrase: 'Jesús, el Emmanuel (Dios con nosotros), enseña una justicia que nace del amor sincero del corazón y reúne una comunidad fraterna de trigo y cizaña.',
+        keyPoints: [
+          'Raíces judías y misión universal: de las "ovejas perdidas de Israel" al envío a "todas las naciones".',
+          'La justicia superior: no basta con no matar; se trata de no odiar ni guardar rencor.',
+          'La Iglesia como "campo mixto": conviven personas frágiles y fuertes; solo Dios juzga.',
+          'Solidaridad con los más pequeños: lo que hicisteis con uno de ellos, conmigo lo hicisteis.'
+        ],
+        cristo: 'Mateo presenta a Jesús como el gran Maestro y Mesías que cumple las promesas del Antiguo Testamento. Es el nuevo Moisés que proclama la Ley renovada desde la montaña. Pero sobre todo es el "Emmanuel", el Dios-con-nosotros presente permanentemente al lado de su comunidad.',
+        comunidad: 'La comunidad de Mateo es un "corpus mixtum" (mezcla de trigo y cizaña). La iglesia no es un club de personas perfectas, sino discípulos de "poca fe" llamados a crecer. La corrección fraterna (Mt 18) nunca busca expulsar para condenar, sino rescatar a la oveja perdida tal como hace el Padre.',
+        pedagogia: '¿Cómo evitar caer en una "ética de la apariencia" (hacer las cosas para que otros nos aplaudan) y cultivar la fidelidad en lo secreto ante Dios? ¿Cómo tratar con compasión a los miembros frágiles de nuestra comunidad?',
+        glosarioRel: ['corpus-mixtum', 'dikaiosyne', 'pleroo']
+      },
+      {
+        id: 'lucas',
+        title: 'Evangelio según Lucas',
+        category: 'sinopticos',
+        categoryLabel: 'Evangelios Sinópticos',
+        icon: 'fa-heart-pulse',
+        reference: 'D. Marguerat, pp. 98-103',
+        phrase: 'La salvación de Dios entra en la historia real: un Jesús lleno de ternura que acoge a los excluidos, pide desprendimiento del dinero y enseña a orar sin cesar.',
+        keyPoints: [
+          'Lucas ubica la salvación en la historia: sincroniza los hechos con los emperadores y gobernantes romanos.',
+          'Tres tiempos: el tiempo de las promesas (Israel), el tiempo de Jesús (plenitud) y el tiempo de la Iglesia guiada por el Espíritu.',
+          'Jesús muere como mártir compasivo y confiado: "Padre, en tus manos encomiendo mi espíritu".',
+          'Ética social muy fuerte: llamada rotunda a compartir los bienes con los pobres y advertencia a los ricos.'
+        ],
+        cristo: 'Jesús es el Salvador bondadoso y cercano, especialmente atento a las viudas, los samaritanos, los publicanos y las mujeres. Su muerte en la cruz no está marcada por el grito de abandono de Marcos, sino por una conmovedora serenidad y perdón hacia sus verdugos ("Padre, perdónalos porque no saben lo que hacen").',
+        comunidad: 'Seguir a Jesús implica un cambio concreto de vida económica: compartir los bienes, ayudar a quien no puede devolver nada y liberarse del apego a las riquezas. Además, la comunidad lucana se sostiene mediante la oración perseverante, necesaria para atravesar el tiempo de la historia.',
+        pedagogia: '¿Cómo influye nuestra fe en el manejo cotidiano de nuestro dinero y recursos? ¿Qué papel ocupa la oración en momentos de cansancio o espera prolongada?',
+        glosarioRel: ['heilsgeschichte', 'ebionismo']
+      },
+      {
+        id: 'hechos',
+        title: 'Hechos de los Apóstoles',
+        category: 'sinopticos',
+        categoryLabel: 'Historia de la Misión',
+        icon: 'fa-compass-drafting',
+        reference: 'D. Marguerat, pp. 119-126',
+        phrase: 'El Espíritu Santo toma la iniciativa y guía la Palabra desde Jerusalén hasta Roma, transformando las dificultades y persecuciones en oportunidades de crecimiento.',
+        keyPoints: [
+          'El protagonista invisible es el Espíritu Santo, que siempre se adelanta a los planes humanos de la Iglesia.',
+          'El viaje de Jerusalén (cuna judía) a Roma (capital del imperio) simboliza que el Evangelio es para todo el mundo.',
+          'El "fracaso providencial": cuando los apóstoles son encarcelados o perseguidos, la Palabra se difunde más.',
+          'Pablo es presentado como el misionero infatigable y testigo inocente que defiende la esperanza de Israel.'
+        ],
+        cristo: 'En Hechos, la salvación se centra en la resurrección: Dios ha levantado a Jesús a quien los hombres crucificaron. El motivo de choque con las autoridades no es la Ley en sí, sino el anuncio gozoso de que Jesús ha resucitado corporalmente de entre los muertos.',
+        comunidad: 'La comunidad de los primeros creyentes en Jerusalén es descrita como una familia ideal que comparte el pan, la oración y los bienes. Aunque surgen tensiones internas (como la atención a las viudas griegas en Hch 6), el Espíritu ayuda a resolverlas mediante el diálogo y la apertura.',
+        pedagogia: '¿Nos dejamos sorprender por el Espíritu Santo para salir de nuestros círculos cerrados? ¿Cómo podemos convertir los momentos difíciles en oportunidades para dar testimonio?',
+        glosarioRel: ['fracaso-providencial', 'kerygma']
+      },
+
+      // GRANDES CARTAS DE PABLO
+      {
+        id: 'romanos',
+        title: 'Carta a los Romanos',
+        category: 'cartas-pablo',
+        categoryLabel: 'Corpus Paulino',
+        icon: 'fa-scale-balanced',
+        reference: 'D. Marguerat, pp. 171-177',
+        phrase: 'Nadie puede justificarse por sus propios méritos; Dios nos regala su justicia y amor incondicional a través de la fe en Jesucristo.',
+        keyPoints: [
+          'Diagnóstico universal: todos los seres humanos (judíos y gentiles) han fallado al buscar autosuficiencia sin Dios.',
+          'Justicia de Dios gratuita: no es un premio que ganamos con obras legales, sino una relación de gracia.',
+          'La fe (confianza): acoger el amor de Dios manifestado en la fidelidad y entrega de Jesús.',
+          'El mandamiento del amor: liberados de la culpa de la ley, somos capacitados para amar de verdad al prójimo.'
+        ],
+        cristo: 'Jesucristo es la manifestación definitiva de la rectitud y la misericordia de Dios. Su muerte en la cruz rompe el círculo vicioso del pecado y la muerte. Por su resurrección, inaugura una nueva humanidad en la que no cuentan los privilegios de raza, linaje o posición social.',
+        comunidad: 'La Iglesia está llamada a vivir en acogida mutua entre los "fuertes" y los "débiles" en la fe. La justificación no lleva al egoísmo: quien se sabe aceptado gratuitamente por Dios vive para servir a los demás (Rm 12-14) y respetar a las autoridades civiles como garantes del bien común.',
+        pedagogia: '¿Sentimos a veces que debemos "ganarnos" el amor de Dios con nuestras buenas acciones? ¿Cómo cambia nuestra vida cuando experimentamos que Dios nos ama antes de cualquier mérito nuestro?',
+        glosarioRel: ['dikaiosyne', 'pistis-christou', 'telos-nomou']
+      },
+      {
+        id: '1corintios',
+        title: 'Primera Carta a los Corintios',
+        category: 'cartas-pablo',
+        categoryLabel: 'Corpus Paulino',
+        icon: 'fa-puzzle-piece',
+        reference: 'D. Marguerat, pp. 193-197',
+        phrase: 'La palabra de la cruz desconcierta la sabiduría del mundo: la verdadera grandeza está en el amor que edifica a la comunidad y en la esperanza de la resurrección.',
+        keyPoints: [
+          'La cruz como crítica al orgullo intelectual y a la búsqueda de estatus o elocuencia fácil.',
+          'La libertad cristiana responsable: "Todo me es lícito, pero no todo me conviene ni todo edifica".',
+          'La Iglesia como un solo Cuerpo: muchos miembros diversos y carismas distintos, pero animados por un mismo Espíritu.',
+          '1 Corintios 15: la resurrección corporal de Cristo asegura la victoria final sobre la muerte y da valor a nuestro cuerpo presente.'
+        ],
+        cristo: 'Frente a los corintios fascinados por la retórica brillante y la sabiduría elitista, Pablo predica a Cristo Crucificado: un escándalo para unos y una locura para otros, pero para los creyentes poder y sabiduría de Dios (1 Co 1,23-24).',
+        comunidad: 'Pablo corrige el individualismo espiritual. Ningún don (hablar en lenguas, profecía, conocimiento) vale nada sin el amor (1 Co 13). La libertad cristiana no consiste en hacer lo que a uno le plazca, sino en cuidar de no herir ni escandalizar la conciencia del hermano más débil.',
+        pedagogia: '¿Cómo valoramos los diferentes talentos en nuestro grupo o trabajo? ¿Usamos nuestra libertad pensando en el bien de los demás o solo en nuestro bienestar personal?',
+        glosarioRel: ['theologia-crucis', 'cuerpo-de-cristo', 'soma-pneumatikon']
+      },
+      {
+        id: '2corintios',
+        title: 'Segunda Carta a los Corintios',
+        category: 'cartas-pablo',
+        categoryLabel: 'Corpus Paulino',
+        icon: 'fa-jar',
+        reference: 'D. Marguerat, pp. 208-211',
+        phrase: 'Llevamos este inmenso tesoro en vasijas de barro: la fuerza de Dios brilla precisamente a través de nuestra debilidad y sencillez.',
+        keyPoints: [
+          'Desmitificación de los "superapóstoles" que presumían de cartas de recomendación, éxtasis y triunfos externos.',
+          'El ministerio cristiano se valida en la entrega paciente, el cansancio sincero y la compasión.',
+          'La colecta solidaria por los pobres de Jerusalén como manifestación visible de unidad entre comunidades.',
+          'El consuelo de Dios: somos consolados en nuestras penas para poder consolar a los que sufren.'
+        ],
+        cristo: 'Cristo se dio a conocer no en la gloria humana, sino haciéndose pobre para enriquecernos con su entrega (2 Co 8,9). El apóstol refleja a este Cristo llevando en su propio cuerpo las marcas de la entrega.',
+        comunidad: 'La autoridad en la Iglesia no se ejerce mediante el dominio ni la imposición autoritaria, sino mediante el servicio y la transparencia. La colecta para los hermanos necesitados de Jerusalén no es un impuesto obligatorio, sino un acto gozoso de agradecimiento y comunión fraternal.',
+        pedagogia: '¿Nos cuesta aceptar nuestras debilidades y límites? ¿Cómo puede la vulnerabilidad compartida unir más a una familia o comunidad que la pretensión de perfección?',
+        glosarioRel: ['vasija-de-barro', 'koinonia']
+      },
+      {
+        id: 'galatas',
+        title: 'Carta a los Gálatas',
+        category: 'cartas-pablo',
+        categoryLabel: 'Corpus Paulino',
+        icon: 'fa-dove',
+        reference: 'D. Marguerat, pp. 223-226',
+        phrase: 'Para ser libres nos liberó Cristo: en Él ya no hay barreras de raza, clase ni género, sino una nueva creación animada por los frutos del Espíritu.',
+        keyPoints: [
+          'Defensa apasionada del Evangelio de la gracia frente a quienes exigían a los paganos circuncidarse y cumplir la Ley ritual.',
+          'Gálatas 3,28: la igualdad radical de todos los bautizados ("ya no hay judío ni griego, esclavo ni libre, varón ni mujer").',
+          'La Ley fue como un tutor temporal que conducía a Cristo; al llegar la fe, somos hijas e hijos libres.',
+          'Los frutos del Espíritu frente a las obras del egoísmo: amor, alegría, paz, paciencia, amabilidad, bondad y fidelidad.'
+        ],
+        cristo: 'Cristo dio su vida para rescatarnos de las ataduras de un mundo opresor. Pretender salvarse acumulando ritos legales es como decir que la muerte de Jesús fue inútil. En la cruz, Cristo nos hizo pasar de la condición de siervos a la de hijos e hijas amados.',
+        comunidad: 'La vida en el Espíritu no es una excusa para el libertinaje, sino una invitación a "servirse unos a otros por amor" (Ga 5,13). Toda la Ley se resume en una sola frase: "Amarás a tu prójimo como a ti mismo".',
+        pedagogia: '¿Qué mandatos o normas sociales nos impiden hoy reconocer la plena dignidad de cada persona? ¿Cómo cultivamos en nuestro entorno los frutos del Espíritu?',
+        glosarioRel: ['libertad-cristiana', 'kaine-ktisis', 'sarx-vs-pneuma']
+      },
+      {
+        id: 'filipenses',
+        title: 'Carta a los Filipenses',
+        category: 'cartas-pablo',
+        categoryLabel: 'Corpus Paulino',
+        icon: 'fa-sun',
+        reference: 'D. Marguerat, pp. 240-242',
+        phrase: 'La alegría profunda que nada puede arrebatar: Cristo se despojó de su grandeza para servirnos, y nos invita a correr la carrera de la fe con esperanza.',
+        keyPoints: [
+          'El himno del despojo (kenosis) en Filipenses 2: de la condición divina al servicio y la cruz, para ser exaltado por Dios.',
+          'Renuncia al currículum de méritos: Pablo considera basura sus privilegios pasados ante el inmenso amor de Cristo.',
+          'La alegría no depende del bienestar material: Pablo escribe preso y lleno de gozo.',
+          'Una relación de amistad sincera y ayuda mutua entre el apóstol y la comunidad.'
+        ],
+        cristo: 'El himno de Flp 2,6-11 es el corazón de la carta: Jesús, teniendo la forma de Dios, no retuvo con codicia su grandeza, sino que se vació de sí mismo, tomando la condición de esclavo. Dios lo levantó y le otorgó el Nombre sobre todo nombre.',
+        comunidad: 'La actitud de Cristo es la brújula para resolver los roces internos: "No hagáis nada por rivalidad o vanagloria, sino con humildad, considerando a los demás como superiores a uno mismo" (Flp 2,3). La comunidad es invitada a vivir con serenidad y alegría constante en el Señor.',
+        pedagogia: '¿Cuál es la diferencia entre el optimismo superficial y la alegría cristiana en medio de los problemas? ¿Cómo podemos practicar la humildad en nuestras relaciones diarias?',
+        glosarioRel: ['kenosis', 'alegria-paradojica']
+      },
+      {
+        id: '1tesalonicenses',
+        title: 'Primera Carta a los Tesalonicenses',
+        category: 'cartas-pablo',
+        categoryLabel: 'Corpus Paulino',
+        icon: 'fa-shield-halved',
+        reference: 'D. Marguerat, pp. 250-253',
+        phrase: 'Abandonar los ídolos para servir al Dios vivo y verdadero: consuelo ante la muerte, vida de trabajo honesto y espera activa del regreso del Señor.',
+        keyPoints: [
+          'El escrito más antiguo del Nuevo Testamento (hacia el año 50 d.C.).',
+          'La fe como ruptura con los ídolos vacíos para descubrir la ternura del Dios vivo.',
+          'Esperanza ante la partida de seres queridos: los muertos en Cristo resucitarán y estaremos siempre con el Señor.',
+          'Ética del trabajo diario y el amor fraterno (philadelphia) para no ser una carga para nadie.'
+        ],
+        cristo: 'Jesús es el Salvador resucitado que nos libra del miedo a la condenación y que vendrá con poder para congregar a vivos y difuntos en un abrazo definitivo de vida eterna.',
+        comunidad: 'Pablo anima a los creyentes a vivir despiertos, como "hijos de la luz". La santidad no se entiende como aislamiento místico, sino como respeto al propio cuerpo, afecto solidario entre hermanos y una vida ciudadana responsable y pacífica.',
+        pedagogia: '¿Qué ídolos modernos (éxito desmedido, consumo, imagen) nos apartan del Dios de la vida? ¿Cómo podemos consolarnos unos a otros ante la pérdida de un ser querido?',
+        glosarioRel: ['philadelphia', 'parusia']
+      },
+      {
+        id: 'filemon',
+        title: 'Carta a Filemón',
+        category: 'cartas-pablo',
+        categoryLabel: 'Corpus Paulino',
+        icon: 'fa-handshake-simple',
+        reference: 'D. Marguerat, pp. 259-260',
+        phrase: 'El amor fraterno rompe las cadenas: un esclavo fugitivo vuelve no como esclavo, sino como un hermano amado en el Señor.',
+        keyPoints: [
+          'La carta más breve y personal de Pablo, pero de enorme trascendencia ética y social.',
+          'Intercesión de Pablo por Onésimo, un esclavo que ha huido de la casa de su amo Filemón.',
+          'La fe en Cristo transforma las relaciones humanas: la fraternidad cristiana es incompatible con la opresión.',
+          'La comunidad reunida en casa como ámbito donde se discuten y toman decisiones éticas de justicia.'
+        ],
+        cristo: 'Cristo es el Señor que hace a todos hermanos de verdad. Al pertenecer a Cristo, ya nadie puede ser considerado como una mera propiedad o un objeto de comercio.',
+        comunidad: 'Pablo no da una orden obligatoria, sino que apela al amor maduro de Filemón para que acoja a Onésimo como si fuera al mismo Pablo. La comunidad en casa de Filemón es testigo y garante de este nuevo modo de tratarse con dignidad.',
+        pedagogia: '¿Qué situaciones de desigualdad o falta de respeto existen hoy a nuestro alrededor y cómo el Evangelio nos llama a tratarnos como hermanos iguales?',
+        glosarioRel: ['fraternidad-en-cristo']
+      },
+
+      // TRADICIÓN DEUTEROPAULINA Y PASTORALES
+      {
+        id: 'colosenses',
+        title: 'Carta a los Colosenses',
+        category: 'deuteropaulinas',
+        categoryLabel: 'Tradición Paulina',
+        icon: 'fa-atom',
+        reference: 'D. Marguerat, pp. 274-276',
+        phrase: 'Cristo es el centro y reconciliador de todo el universo: no hay poderes cósmicos que temer cuando nuestra vida está segura y escondida en Dios.',
+        keyPoints: [
+          'Himno a Cristo cósmico (Col 1,15-20): imagen del Dios invisible, primogénito de la creación y cabeza de la Iglesia.',
+          'Superación del miedo supersticioso a ángeles, astros o fuerzas espirituales mediante la suficiencia de Cristo.',
+          'Ya hemos resucitado espiritualmente con Cristo en el bautismo: nuestra vida presente está oculta con Él en Dios.',
+          'Instrucciones familiares y de convivencia social (códigos domésticos) transformadas por el amor mutuo.'
+        ],
+        cristo: 'Cristo es la cabeza de toda la creación y de la Iglesia. En Él habita corporalmente toda la plenitud de Dios. Su victoria en la cruz desarmó simbólicamente los poderes que atemorizaban la conciencia humana en la antigüedad.',
+        comunidad: 'Los bautizados están llamados a vestirse de sentimientos de compasión, bondad, humildad, dulzura y paciencia, perdonándose mutuamente como el Señor nos perdonó. La paz de Cristo debe reinar en sus corazones.',
+        pedagogia: '¿A qué cosas o supersticiones tememos hoy que nos quitan la paz? ¿Qué significa "vestirse de bondad y paciencia" en nuestra convivencia diaria?',
+        glosarioRel: ['cristologia-cosmica', 'haustafeln']
+      },
+      {
+        id: 'efesios',
+        title: 'Carta a los Efesios',
+        category: 'deuteropaulinas',
+        categoryLabel: 'Tradición Paulina',
+        icon: 'fa-bridge',
+        reference: 'D. Marguerat, pp. 288-291',
+        phrase: 'Cristo derribó el muro que separaba a los pueblos para hacer de todos un solo Hombre Nuevo en paz y comunión.',
+        keyPoints: [
+          'La Iglesia no es solo el grupo local, sino el templo vivo y universal donde judíos y gentiles forman un solo cuerpo.',
+          'El derribo del muro de hostilidad: la paz de Cristo supera las divisiones raciales y culturales.',
+          'Elevación con Cristo: Dios nos ha hecho sentar ya espiritualmente en los lugares celestiales.',
+          'La metáfora del matrimonio como reflejo del amor de Cristo por la Iglesia y la armadura espiritual de la fe.'
+        ],
+        cristo: 'Cristo es nuestra paz. En su propia carne en la cruz eliminó la división y la enemistad, reconciliando a la humanidad con Dios y entre sí para crear una nueva sociedad reconciliada.',
+        comunidad: 'La comunidad cristiana es el "Hombre Nuevo" (kainos anthrōpos). Se exhorta a preservar con esmero la unidad del Espíritu mediante el vínculo de la paz: "un solo Señor, una sola fe, un solo bautismo, un solo Dios y Padre de todos".',
+        pedagogia: '¿Qué "muros" separan hoy a las personas en nuestra sociedad (nacionalismos, prejuicios, clases sociales) y cómo puede el Evangelio tender puentes de reconciliación?',
+        glosarioRel: ['kainos-anthropos', 'iglesia-universal']
+      },
+      {
+        id: '2tesalonicenses',
+        title: 'Segunda Carta a los Tesalonicenses',
+        category: 'deuteropaulinas',
+        categoryLabel: 'Tradición Paulina',
+        icon: 'fa-hourglass-half',
+        reference: 'D. Marguerat, pp. 300-302',
+        phrase: 'Frente al pánico y los rumores sobre el fin del mundo, serenidad: perseverar en el trabajo diario, la honradez y la fidelidad sin caer en el engaño.',
+        keyPoints: [
+          'Corrección de falsos rumores: nadie debe alarmarse pensando que el Día del Señor ya ha llegado.',
+          'Antes del desenlace final, la historia tiene un orden donde Dios pone límites al misterio de la impiedad.',
+          'Llamada enérgica a no desentenderse de la vida diaria: "El que no quiera trabajar, que no coma".',
+          'La perseverancia ética: no cansarse de hacer el bien a pesar de las dificultades.'
+        ],
+        cristo: 'Cristo vendrá en su debido momento para vencer toda falsedad y engaño con el resplandor de su presencia. Mientras tanto, sostiene el corazón de sus amigos con fortaleza.',
+        comunidad: 'La comunidad debe mantener la calma y no dejarse arrastrar por predicadores fanáticos. El tiempo presente es valioso: no es para cruzarse de brazos, sino para vivir con orden, trabajando con paz y ganándose el pan.',
+        pedagogia: '¿Por qué surgen periódicamente movimientos que anuncian el fin inminente del mundo y generan angustia? ¿Cómo nos enseña esta carta a vivir una fe responsable y tranquila en el presente?',
+        glosarioRel: ['katechon', 'misterio-impiedad']
+      },
+      {
+        id: 'pastorales',
+        title: 'Cartas Pastorales (1-2 Timoteo y Tito)',
+        category: 'deuteropaulinas',
+        categoryLabel: 'Tradición Paulina',
+        icon: 'fa-house-chimney-window',
+        reference: 'D. Marguerat, pp. 319-325',
+        phrase: 'Cuidar la casa de Dios: fidelidad a la enseñanza sana, orden ministerial y una vida cristiana íntegra y creíble en medio de la sociedad.',
+        keyPoints: [
+          'La epifanía de la salvación: la bondad de Dios se manifestó en Jesús y se manifestará en su gloria final.',
+          'Pablo es presentado como el "primer pecador salvado", arquetipo de la infinita paciencia de Dios.',
+          'La Iglesia como "casa de Dios, columna y fundamento de la verdad".',
+          'Organización de los ministerios (obispos, presbíteros y diáconos) para preservar la concordia y el buen testimonio.'
+        ],
+        cristo: 'Jesucristo es el único mediador entre Dios y los seres humanos, entregado en rescate por todos (1 Tm 2,5). En Él se ha manifestado la gracia que salva y que educa para renunciar a la impiedad y vivir de manera sobria y justa.',
+        comunidad: 'Las comunidades de la segunda y tercera generación necesitan organizarse para sostener su vida de fe a largo plazo. Se busca que los cristianos sean ciudadanos honestos, respetables, pacíficos y reconocidos por sus buenas obras en la ciudad.',
+        pedagogia: '¿Cómo mantener viva la autenticidad del Evangelio al mismo tiempo que una comunidad se organiza con normas y responsabilidades? ¿Qué significa ser "columna de verdad" en nuestro entorno?',
+        glosarioRel: ['epifania', 'deposito-fe', 'casa-de-dios']
+      },
+
+      // HOMILÉTICA, TRADICIÓN JOÁNICA Y APOCALIPSIS
+      {
+        id: 'hebreos',
+        title: 'Carta a los Hebreos',
+        category: 'hebreos-juan-apocalipsis',
+        categoryLabel: 'Homilética Neotestamentaria',
+        icon: 'fa-mountain-sun',
+        reference: 'D. Marguerat, pp. 338-340',
+        phrase: 'Cristo, Sumo Sacerdote compasivo, abrió para siempre el camino hacia Dios con una sola ofrenda de amor: ánimo ante el cansancio en la fe.',
+        keyPoints: [
+          'Género de homilía o sermón de exhortación (logos paraklēseōs) para una comunidad fatigada y a punto de desanimarse.',
+          'Contraste entre los antiguos sacrificios repetitivos del templo y el sacrificio único, definitivo y perfecto de Jesús (ephapax).',
+          'Cristo según el orden de Melquisedec: sacerdote que conoce nuestra debilidad porque fue probado en todo menos en el pecado.',
+          'Hebreos 11 y la "nube de testigos": la fe como certeza de lo que se espera y convicción de lo que no se ve.'
+        ],
+        cristo: 'Jesús es el Hijo radiante de Dios y, al mismo tiempo, nuestro hermano solidario. Aprendió la obediencia en el sufrimiento y ha entrado no en un santuario hecho por manos humanas, sino en la presencia misma de Dios, abriendo de par en par la puerta para todos nosotros.',
+        comunidad: 'Los destinatarios son invitados a no retroceder ni enfriarse en su compromiso. Rodeados por la memoria de tantos hombres y mujeres que creyeron contra toda esperanza, deben fijar sus ojos en Jesús, el pionero y consumador de la fe.',
+        pedagogia: '¿Qué hacemos cuando sentimos cansancio espiritual o desánimo en nuestras convicciones? ¿Cómo nos ayuda saber que Jesús comprende nuestras debilidades y luchas?',
+        glosarioRel: ['ephapax', 'sumo-sacerdote', 'nube-de-testigos']
+      },
+      {
+        id: 'juan',
+        title: 'Evangelio según Juan',
+        category: 'hebreos-juan-apocalipsis',
+        categoryLabel: 'Tradición Joánica',
+        icon: 'fa-feather-pointed',
+        reference: 'D. Marguerat, pp. 364-369',
+        phrase: 'La Palabra eterna se hizo carne: Jesús, el Enviado del Padre, nos regala vida abundante hoy mismo y reina desde el madero de la cruz.',
+        keyPoints: [
+          'Prólogo sublime (Jn 1): el Logos preexistente se hace carne y acampa entre nosotros lleno de gracia y de verdad.',
+          'Cristología del Enviado (shaliah): Jesús habla y actúa en representación total del amor del Padre ("El Padre y yo somos uno").',
+          'Los milagros son "signos" (sēmeia) que apuntan a una realidad más profunda: Jesús como Pan de Vida, Luz del Mundo y Resurrección.',
+          'Escatología realizada: el juicio y la vida eterna no son solo para el fin del mundo; quien cree ya ha pasado de la muerte a la vida.',
+          'La cruz es su momento de glorificación y elevación soberana.'
+        ],
+        cristo: 'En Juan, Jesús revela quién es Dios a través de sus grandes discursos ("Yo soy el buen pastor", "Yo soy el camino, la verdad y la vida"). No muere desamparado: sube a la cruz como quien reina y culmina su misión con majestad ("Todo está cumplido").',
+        comunidad: 'La comunidad de los discípulos se mantiene unida por el Espíritu Paráclito, el abogado y consolador que les ayuda a recordar y profundizar la enseñanza de Jesús. El mandamiento supremo y distintivo es: "Amaos los unos a los otros como yo os he amado".',
+        pedagogia: '¿Experimentamos la vida eterna como algo que empieza hoy en nuestras relaciones, o solo como un premio futuro tras la muerte? ¿Qué implica tener al Paráclito como consolador y guía?',
+        glosarioRel: ['logos-encarnado', 'shaliah', 'semeia', 'paraclito']
+      },
+      {
+        id: '1juan',
+        title: 'Primera Carta de Juan',
+        category: 'hebreos-juan-apocalipsis',
+        categoryLabel: 'Tradición Joánica',
+        icon: 'fa-shield-heart',
+        reference: 'D. Marguerat, pp. 380-382',
+        phrase: 'Dios es amor: quien dice que ama a Dios pero desprecia a su hermano o niega la humanidad real de Jesús, se engaña a sí mismo.',
+        keyPoints: [
+          'Defensa de la encarnación real: Jesús vino en carne y hueso (contra doctrinas docetistas que decían que su cuerpo era mera apariencia).',
+          'La prueba decisiva de la fe es el amor práctico al hermano: no se puede amar a Dios a quien no se ve si no se ama al hermano a quien sí se ve.',
+          'La vocación a la vida santa: no pecar, pero si alguno peca tenemos un defensor ante el Padre.',
+          'Seguridad y consuelo: Dios es más grande que nuestra propia conciencia culpable.'
+        ],
+        cristo: 'Jesús es el Hijo verdadero que dio su vida corporal real y derramó su sangre por nuestros pecados. Cualquier espiritualidad que separe a Cristo de la realidad de su vida humana y de su muerte histórica es rechazada tajantemente.',
+        comunidad: 'Frente a divisiones internas y maestros que pretendían tener una iluminación especial sin compromisos éticos, la carta afirma que el verdadero conocimiento de Dios se verifica en la comunión fraterna y en la ayuda mutua en las necesidades cotidianas.',
+        pedagogia: '¿Cómo podemos desenmascarar hoy discursos piadosos que hablan mucho de Dios pero descuidan la justicia y el cariño hacia las personas concretas?',
+        glosarioRel: ['dios-es-amor', 'docetismo']
+      },
+      {
+        id: 'apocalipsis',
+        title: 'Apocalipsis de Juan',
+        category: 'hebreos-juan-apocalipsis',
+        categoryLabel: 'Tradición Joánica',
+        icon: 'fa-shield-halved',
+        reference: 'D. Marguerat, pp. 398-402',
+        phrase: 'El Cordero degollado de pie es el verdadero Vencedor: la liturgia de la fe nos da valor para resistir la seducción y opresión de los imperios del mundo.',
+        keyPoints: [
+          'No es un libro de catástrofes para adivinar el futuro, sino un mensaje de esperanza y resistencia profética para el presente.',
+          'El Cordero degollado y de pie (Ap 5): venció mediante su amor entregado, no con espadas ni ejércitos.',
+          'Crítica feroz al imperio de Roma (Babilonia): denuncia de su idolatría política, su violencia militar y su injusticia comercial.',
+          'La liturgia como lenguaje contracultural: adorar a Dios y al Cordero nos hace libres del culto a los poderes mundanos.',
+          'Visión final: la Nueva Jerusalén desciende a la tierra; Dios enjugará toda lágrima y no habrá más muerte ni llanto.'
+        ],
+        cristo: 'Jesús es el "Testigo fiel", el Soberano de los reyes de la tierra y el Cordero. Su victoria ya ha tenido lugar en la Pascua; por eso los imperios que se creen eternos tienen los días contados.',
+        comunidad: 'Las comunidades de Asia Menor son llamadas a no acomodarse al sistema imperial ni dejarse seducir por sus ventajas económicas deshonestas ("Salid de ella, pueblo mío"). Están llamadas a mantenerse firmes con paciencia y perseverancia.',
+        pedagogia: '¿Qué "imperios" o sistemas actuales exigen adoración y subordinación económica hoy? ¿Cómo nos llena de esperanza la promesa de que Dios enjugará todo sufrimiento?',
+        glosarioRel: ['cordero-degollado', 'liturgia-disidente', 'babilonia-imperial']
+      },
+
+      // CARTAS CATÓLICAS
+      {
+        id: 'santiago',
+        title: 'Carta de Santiago',
+        category: 'cartas-catolicas',
+        categoryLabel: 'Cartas Católicas',
+        icon: 'fa-hands-holding',
+        reference: 'D. Marguerat, pp. 416-418',
+        phrase: 'La fe sin obras está completamente muerta: el verdadero Evangelio se demuestra en la ayuda al necesitado y en la defensa de los pobres.',
+        keyPoints: [
+          'No hay oposición real con Pablo: Pablo combate las obras de la Ley ritual judía; Santiago combate una fe teórica de palabras vacías.',
+          'Hasta los demonios creen en Dios y tiemblan: la fe auténtica se prueba en la acción cotidiana.',
+          'El cristianismo de los pobres: Dios eligió a los marginados para hacerlos ricos en la fe; advertencia severa a los ricos que retienen el salario.',
+          'Control de la lengua y de las palabras que destruyen la convivencia comunitaria.'
+        ],
+        cristo: 'Aunque nombra pocas veces a Jesús, toda la carta respira el espíritu del Sermón de la Montaña: la búsqueda de un corazón íntegro, compasivo y pacífico que confía en el Dios que da generosamente a todos.',
+        comunidad: 'Santiago condena el clasismo dentro de la asamblea cristiana: dar un lugar de honor al rico con anillos de oro y arrinconar al pobre vestido con andrajos es una traición a la fe. La religión pura consiste en visitar a huérfanos y viudas y guardarse de la corrupción del mundo.',
+        pedagogia: '¿En qué momentos nuestra fe corre el riesgo de quedarse en discursos bonitos sin tocar nuestro bolsillo o nuestro tiempo para con los necesitados?',
+        glosarioRel: ['fe-y-obras', 'ortopraxia', 'pobres-de-dios']
+      },
+      {
+        id: '1pedro',
+        title: 'Primera Carta de Pedro',
+        category: 'cartas-catolicas',
+        categoryLabel: 'Cartas Católicas',
+        icon: 'fa-anchor',
+        reference: 'D. Marguerat, pp. 428-429',
+        phrase: 'Extranjeros y peregrinos en este mundo: nuestro sufrimiento injusto adquiere sentido y honor en comunión con los padecimientos de Cristo.',
+        keyPoints: [
+          'Dirigida a cristianos que viven marginados y discriminados socialmente en Asia Menor.',
+          'El sufrimiento del inocente: no sufrir por hacer el mal, sino por el nombre de Cristo con dignidad y paciencia.',
+          'Identidad recuperada: quienes antes no eran pueblo ahora son "raza elegida, sacerdocio real, nación santa, pueblo adquirido por Dios".',
+          'La comunidad como casa espiritual edificada sobre Cristo, la piedra viva desechada por los hombres.'
+        ],
+        cristo: 'Cristo sufrió por nosotros dejándonos un ejemplo para que sigamos sus huellas: no cometió pecado, no profirió engaño y al ser ultrajado no respondía con amenazas, sino que se confiaba al que juzga rectamente (1 P 2,21-24).',
+        comunidad: 'La conciencia de ser "residentes extranjeros" (paroikoi) no lleva a recluirse en una secta resentida, sino a dar testimonio de bondad hacia la sociedad civil y a "estar siempre listos para dar razón de nuestra esperanza a todo el que nos la pida, con dulzura y respeto".',
+        pedagogia: '¿Cómo podemos dar testimonio de nuestra fe en ambientes hostiles o indiferentes sin caer en la agresividad ni en la cobardía?',
+        glosarioRel: ['paroikoi', 'sacerdocio-comun']
+      },
+      {
+        id: '2pedro',
+        title: 'Segunda Carta de Pedro',
+        category: 'cartas-catolicas',
+        categoryLabel: 'Cartas Católicas',
+        icon: 'fa-clock-rotate-left',
+        reference: 'D. Marguerat, pp. 436-437',
+        phrase: 'Dios no se retrasa en cumplir su promesa, sino que es paciente: su deseo es que nadie se pierda y que todos lleguen a la conversión.',
+        keyPoints: [
+          'Respuesta firme a quienes se burlaban de la parusía diciendo: "¿Dónde está la promesa de su venida? Todo sigue igual desde los orígenes".',
+          'Para el Señor un día es como mil años y mil años como un día: el tiempo es oportunidad de salvación.',
+          'Alerta contra maestros inmorales que prometían una falsa libertad para justificar el libertinaje.',
+          'Jesús es llamado explícitamente "nuestro Dios y Salvador Jesucristo" (2 P 1,1).'
+        ],
+        cristo: 'La carta fundamenta la verdad del Evangelio en el testimonio ocular de los apóstoles: "No os dimos a conocer el poder y la venida de nuestro Señor siguiendo fábulas artificiosas, sino habiendo sido testigos con nuestros propios ojos de su gloria en la montaña santa" (la Transfiguración).',
+        comunidad: 'Se exhorta a los creyentes a añadir a su fe virtud, conocimiento, paciencia, piedad y amor fraterno. La aparente tardanza del final no es motivo de descuido, sino de gratitud ante la infinita paciencia de Dios.',
+        pedagogia: '¿Cómo vivimos el paso del tiempo? ¿Sabemos ver la paciencia de Dios como una oportunidad para mejorar nuestra vida y perdonar a otros?',
+        glosarioRel: ['paciencia-divina', 'testigos-oculares']
+      },
+      {
+        id: 'judas',
+        title: 'Carta de Judas',
+        category: 'cartas-catolicas',
+        categoryLabel: 'Cartas Católicas',
+        icon: 'fa-shield',
+        reference: 'D. Marguerat, pp. 443-444',
+        phrase: 'Luchar con valentía por la fe confiada a los creyentes: defender la esperanza, cuidar de los que dudan y mantenerse seguros en el amor de Dios.',
+        keyPoints: [
+          'Carta breve pero apasionada contra intrusos que convertían la gracia de Dios en libertinaje descarado.',
+          'Uso vivo de tradiciones del Antiguo Testamento y apócrifos (como 1 Henoc) para mostrar la justicia de Dios.',
+          'Pedagogía pastoral frente a las dudas: "Tened compasión de los que vacilan; a otros salvadlos arrancándolos del fuego".',
+          'Doxología final bellísima: a Aquel que es poderoso para guardarnos sin tropiezo y presentarnos sin mancha ante su gloria.'
+        ],
+        cristo: 'Jesucristo es el único Dueño y Señor cuyo regreso en gloria traerá el juicio sanador y la plenitud de la vida eterna para quienes esperan su misericordia.',
+        comunidad: 'Frente a individuos soberbios que siembran división y no tienen el Espíritu, los cristianos deben edificarse mutuamente en su santísima fe, orando en el Espíritu Santo y guardándose en el amor de Dios.',
+        pedagogia: '¿Cómo podemos discernir entre una libertad auténtica que ayuda a crecer y actitudes irresponsables que dañan a la comunidad?',
+        glosarioRel: ['deposito-fe', 'reserva-escatologica']
+      }
+    ];
+
+    // GLOSARIO TEOLÓGICO ACCESIBLE
+    const glossaryItems = [
+      {
+        term: 'Theologia Crucis (Teología de la Cruz)',
+        greek: 'λόγος τοῦ σταυροῦ',
+        simple: 'Descubrir a Dios en la debilidad y el sufrimiento.',
+        detail: 'Frente a la tendencia humana de buscar a Dios solo en el éxito, los milagros espectaculares o el poder político, autores como Marcos y Pablo afirman que Dios se reveló de modo supremo en el amor vulnerable y desarmado de Jesús clavado en la cruz.'
+      },
+      {
+        term: 'Dikaiosynē Theou (Justicia de Dios)',
+        greek: 'δικαιοσύνη τοῦ θεοῦ',
+        simple: 'El amor fiel de Dios que nos acoge y rehabilita gratuitamente.',
+        detail: 'En las cartas de Pablo, no significa que Dios sea un juez castigador que premia o sanciona según méritos, sino que Dios interviene por pura gracia para sanar y restablecer en amistad a la persona pecadora que confía en Él.'
+      },
+      {
+        term: 'Pistis Christou (Fe de/en Cristo)',
+        greek: 'πίστις Χριστοῦ',
+        simple: 'Confianza viva fundada en la entrega fiel de Jesús.',
+        detail: 'Designa la fe no como una simple creencia intelectual en dogmas, sino como una entrega existencial: apoyarse plenamente en el amor y la fidelidad de Jesucristo demostrados en la cruz.'
+      },
+      {
+        term: 'Corpus Mixtum (Cuerpo Mixto)',
+        greek: 'σῖτος καὶ ζιζάνιον',
+        simple: 'La Iglesia como comunidad donde conviven trigo y cizaña.',
+        detail: 'Concepto clave en Mateo (parábola del trigo y la cizaña): en la historia presente, la comunidad de creyentes contiene tanto aciertos como fragilidades y pecados. Nadie en la tierra tiene el derecho de condenar o arrancar a otros; el juicio pertenece exclusivamente a Dios.'
+      },
+      {
+        term: 'Escatología Realizada',
+        greek: 'ἔρχεται ὥρα καὶ νῦν ἐστιν',
+        simple: 'La salvación y el juicio comienzan hoy mismo en el encuentro con Cristo.',
+        detail: 'Típica del Evangelio según Juan: no tenemos que esperar hasta el final de los tiempos para tener vida eterna. Quien escucha la Palabra de Jesús y cree en el Padre ya ha pasado de la muerte a la vida en el presente.'
+      },
+      {
+        term: 'Kenosis (Despojo/Vaciado)',
+        greek: 'κένωσις / ἑαυτὸν ἐκένωσεν',
+        simple: 'El acto voluntario de Jesús de renunciar a privilegios para servir.',
+        detail: 'Inspirado en el himno de Filipenses 2: Jesús, siendo Dios, no se aferró a su rango soberano, sino que se hizo servidor y humano hasta la muerte de cruz. Es el modelo pedagógico supremo para la vida comunitaria.'
+      },
+      {
+        term: 'Haustafeln (Códigos Domésticos)',
+        greek: 'οἰκονομία',
+        simple: 'Normas de convivencia para la casa y la familia.',
+        detail: 'Estructuras éticas presentes en Colosenses, Efesios y 1 Pedro tomadas de la sociedad grecorromana para organizar la vida entre esposos, hijos y sirvientes, pero transformadas desde el criterio del amor mutuo y el respeto en Cristo.'
+      },
+      {
+        term: 'Paráclito (Abogado y Consolador)',
+        greek: 'ὁ παράκλητος',
+        simple: 'El Espíritu Santo que acompaña, defiende y enseña a la Iglesia.',
+        detail: 'En los discursos de despedida del Evangelio de Juan (Jn 14-16), es el defensor fiel que permanece siempre al lado de los discípulos, ayudándoles a comprender en profundidad todo lo que Jesús dijo e hizo.'
+      },
+      {
+        term: 'Ephapax (De una vez para siempre)',
+        greek: 'ἐφάπαξ',
+        simple: 'La entrega única y definitiva de Cristo que supera los antiguos ritos.',
+        detail: 'En la Carta a los Hebreos, subraya que la ofrenda de Jesús en la cruz es tan perfecta y total que no necesita repetirse nunca más como se hacía con los sacrificios anuales de animales en el Templo de Jerusalén.'
+      },
+      {
+        term: 'Paroikoi (Extranjeros y Peregrinos)',
+        greek: 'πάροικοι καὶ παρεπίδημοι',
+        simple: 'Vivir en la sociedad con libertad interior sin acomodarse a sus injusticias.',
+        detail: 'En 1 Pedro describe la condición de los creyentes en el Imperio Romano: no sentirse dueños del mundo ni asimilarse a sus vicios, sino habitar pacíficamente como testigos del Reino con esperanza activa.'
+      },
+      {
+        term: 'Kainē Ktisis (Nueva Creación)',
+        greek: 'καινὴ κτίσις',
+        simple: 'La transformación profunda de la persona reconciliada con Dios.',
+        detail: 'En 2 Corintios 5 y Gálatas 6 expresa que quien está unido a Cristo es una persona renovada por dentro: lo viejo ha pasado y empieza un horizonte nuevo de fraternidad y esperanza.'
+      },
+      {
+        term: 'Shaliah (Principio de Representación)',
+        greek: 'ὁ ἀπεσταλμένος',
+        simple: 'El enviado que representa plenamente a quien lo envió.',
+        detail: 'Principio jurídico semítico en Juan: Jesús no vino a hacer su propia voluntad ni a inventar su mensaje; como Enviado supremo del Padre, ver a Jesús y escucharle es ver y escuchar directamente a Dios.'
+      }
+    ];
+
+    // DATOS DE LA MATRIZ COMPARATIVA TEMÁTICA
+    const matrixThemes = {
+      ley: {
+        title: 'Estatuto de la Ley (Torá), las Obras y la Gracia',
+        columns: ['Corpus / Escrito', 'Postura Teológica Principal', 'Cita o Referencia Clave', 'Implicación Práctica en Clase'],
+        rows: [
+          ['Mateo', 'La Ley no queda abolida; es llevada a su plenitud por el Mesías mediante la "justicia superior" del amor al prójimo.', 'Mt 5,17-20; Mt 25,31-46', 'Explicar que la fidelidad bíblica no es legalismo, sino profundizar en la raíz del mandamiento.'],
+          ['Pablo (Rm / Ga)', 'Nadie se justifica por cumplir ritos de la Ley; la salvación es don gratuito recibido por la confianza en Cristo.', 'Ga 2,16; Rm 3,21-28', 'Desmontar la angustia de creer que debemos "comprar" el amor de Dios con méritos propios.'],
+          ['Santiago', 'La fe auténtica se manifiesta necesariamente en obras solidarias; la fe sin obras es estéril como la de los demonios.', 'St 2,14-26', 'Evitar que la predicación de la gracia se convierta en una excusa para la indiferencia ante el pobre.'],
+          ['Hebreos', 'El régimen legal y sacrificial antiguo era solo sombra transitoria; la ofrenda de Jesús en la cruz clausura para siempre el culto levítico.', 'Hb 8,13; 10,1-10', 'Mostrar cómo la muerte de Jesús superó definitivamente el miedo a tener que ofrecer sacrificios para aplacar a Dios.']
+        ]
+      },
+      cristo: {
+        title: 'Quién es Jesucristo (Cristología)',
+        columns: ['Corpus / Escrito', 'Acento Cristológico Central', 'Título o Metáfora Predilecta', 'Mensaje Esencial'],
+        rows: [
+          ['Marcos', 'El Cristo humillado en la cruz que desmantela las falsas expectativas de gloria y poder terrenal.', 'Hijo de Dios / Hijo del Hombre servidor (Mc 10,45)', 'A Dios se le encuentra en el despojo del que sufre, no en los aplausos del mundo.'],
+          ['Lucas', 'El Salvador lleno de ternura y compasión que busca a los perdidos y muere en serena entrega filial.', 'Salvador / Profeta poderoso en obras y palabras', 'Dios tiene una preferencia marcada por los heridos, las mujeres y los marginados.'],
+          ['Juan', 'La Palabra eterna que acampa en nuestra historia humana; reina con dignidad desde la misma cruz.', 'El Logos encarnado / El Enviado del Padre / Yo Soy', 'Jesús nos ofrece vida abundante y comunión con el Padre desde hoy mismo.'],
+          ['Colosenses / Efesios', 'El Señor soberano de todo el cosmos que vence todo temor a fuerzas invisibles y une a la humanidad reconciliada.', 'Cabeza de la creación y de la Iglesia / Hombre Nuevo', 'Nada en el universo escapa al señorío protector y pacificador de Jesucristo.']
+        ]
+      },
+      escatologia: {
+        title: 'El Futuro, la Resurrección y la Esperanza (Escatología)',
+        columns: ['Corpus / Escrito', 'Visión del Fin y del Presente', 'Peligro que Corrige', 'Actitud Esperada'],
+        rows: [
+          ['1 Tesalonicenses', 'Esperanza viva en la resurrección de los difuntos cuando regrese el Señor con voz de arcángel.', 'La desesperación o tristeza sin esperanza ante el duelo.', 'Vivir despiertos, como hijos de la luz, trabajando con las manos.'],
+          ['2 Tesalonicenses', 'El final no es inmediato; hay que desestimar falsos rumores apocalípticos que generan caos.', 'El fanatismo de abandonar las tareas cotidianas y el trabajo.', 'Perseverancia paciente y orden en la vida diaria comunitaria.'],
+          ['Juan', 'Escatología realizada: el juicio y la vida eterna se deciden ahora mismo al responder a la luz de Jesús.', 'Posponer la decisión de fe hacia un futuro lejano e indefinido.', 'Vivir con alegría la vida eterna que ya habita en el creyente.'],
+          ['Apocalipsis', 'La historia desemboca en la Nueva Jerusalén; Dios enjugará toda lágrima tras vencer al mal imperial.', 'La resignación o complicidad pasiva ante los poderes injustos del mundo.', 'Resistencia pacífica, oración litúrgica y fidelidad inquebrantable.']
+        ]
+      },
+      iglesia: {
+        title: 'La Comunidad Cristiana y los Ministerios (Eclesiología)',
+        columns: ['Corpus / Escrito', 'Metáfora Eclesial Central', 'Composición de la Comunidad', 'Principio de Convivencia'],
+        rows: [
+          ['Mateo', 'El "Campo Mixto" (trigo y cizaña) guiado por los Doce y abierto a todos los pueblos.', 'Hermanos de "poca fe" y pequeños (mikroi).', 'Corrección fraterna para rescatar y perdón setenta veces siete.'],
+          ['1 Corintios', 'El "Cuerpo de Cristo" con diversidad indispensable de carismas.', 'Paganos de Corinto con tensiones sociales y dones diversos.', 'La búsqueda del amor mutuo como camino más excelente (1 Co 13).'],
+          ['Efesios', 'El "Templo Vivo" y "Esposa de Cristo" de dimensión cósmica universal.', 'Antiguos enemigos (judíos y gentiles) reconciliados en un solo cuerpo.', 'Cuidar con esmero la unidad del Espíritu con el vínculo de la paz.'],
+          ['Pastorales', 'La "Casa de Dios, columna y baluarte de la verdad".', 'Comunidad estructurada con obispos, presbíteros y diáconos.', 'Guardar el depósito fiel de la enseñanza y dar testimonio intachable.']
+        ]
+      },
+      sociedad: {
+        title: 'La Sociedad, los Pobres y el Poder Político',
+        columns: ['Corpus / Escrito', 'Postura ante la Sociedad y la Riqueza', 'Texto Emblemático', 'Desafío Pastoral'],
+        rows: [
+          ['Lucas', 'Advertencia rotunda a los ricos y bienaventuranza de los desposeídos; llamada a compartir con desprendimiento.', 'Lc 1,51-53; 6,20-26; 16,19-31', 'Revisar cómo usamos nuestros recursos económicos a favor de la justicia social.'],
+          ['Santiago', 'Condena sin paliativos del clasismo y de la retención de sueldos; Dios enriqueció en fe a los pobres del mundo.', 'St 2,1-9; 5,1-6', 'Eliminar privilegios y favoritismos en nuestras comunidades y grupos de fe.'],
+          ['Romanos 13 vs. Apocalipsis 13', 'Tensión bíblica fecunda: Rm 13 valora la autoridad civil para el orden público pacífico; Ap 13 denuncia al Estado cuando se diviniza y exige sumisión idólatra.', 'Rm 13,1-7 // Ap 13,1-18', 'Ciudadanía responsable pero con capacidad de crítica profética ante la corrupción.']
+        ]
+      }
+    };
+
+    // BANCO DIDÁCTICO DEL TALLER DE CLASE
+    const workshopContent = {
+      debates: {
+        title: '10 Preguntas de Debate Abierto para Clase o Grupo',
+        body: `
+          <ol class="list-decimal list-inside space-y-3">
+            <li><strong>¿Contradicción o Complemento?</strong> ¿Por qué parece que Pablo (Rm 3,28) descarta las obras para la salvación mientras Santiago (St 2,24) dice que la persona se justifica por las obras y no solo por la fe?</li>
+            <li><strong>El Misterio de la Cruz:</strong> ¿Por qué en Marcos Jesús no quiere que la gente divulgue sus milagros y solo acepta ser confesado plenamente cuando muere crucificado?</li>
+            <li><strong>El Dinero y la Comunidad:</strong> ¿Por qué Lucas y Santiago son tan duros con las riquezas mientras otras cartas piden una inserción sobria y tranquila en la sociedad?</li>
+            <li><strong>La Resurrección Corporal:</strong> Si los corintios ya se sentían "espiritualmente salvados", ¿por qué Pablo insiste tanto en 1 Co 15 en que el cuerpo también resucitará?</li>
+            <li><strong>El Trigo y la Cizaña:</strong> ¿Qué consecuencias prácticas tiene para una comunidad hoy considerarse un "campo mixto" (Mateo) en vez de un grupo de puros y perfectos?</li>
+            <li><strong>La Igualdad Bautismal frente a la Realidad:</strong> ¿Cómo convivía el ideal de Gálatas 3,28 ("ya no hay esclavo ni libre") con la situación cotidiana de Filemón y Onésimo?</li>
+            <li><strong>Dos miradas al Imperio Romano:</strong> ¿Por qué Romanos 13 pide respetar a las autoridades y en cambio Apocalipsis 13 llama al imperio romano "la Bestia"?</li>
+            <li><strong>El Rostro de Dios en el Sufrimiento:</strong> ¿En qué se diferencia la esperanza de 1 Pedro ante la marginación social del optimismo fácil de la sociedad actual?</li>
+            <li><strong>El Amor en Acción:</strong> ¿Qué respondería 1 Juan a una persona que afirma rezar mucho pero no se habla con un miembro de su propia familia?</li>
+            <li><strong>El Fin del Mundo:</strong> ¿Cómo nos ayuda 2 Tesalonicenses y Apocalipsis a no caer en el pánico ante profecías catastrofistas modernas?</li>
+          </ol>
+        `
+      },
+      frases: {
+        title: 'Síntesis en una Frase de los 21 Escritos Estudiados',
+        body: `
+          <div class="space-y-2 text-[11px] sm:text-xs">
+            <p><strong>Marcos:</strong> Dios se revela en la humildad de la cruz, no en el poder terrenal.</p>
+            <p><strong>Mateo:</strong> Jesús es el Emmanuel que enseña una justicia que brota del corazón y acoge a los pequeños.</p>
+            <p><strong>Lucas:</strong> Dios visita nuestra historia con entrañas de compasión y pide solidaridad con los pobres.</p>
+            <p><strong>Hechos:</strong> El Espíritu Santo conduce la Palabra de Dios a través de todos los obstáculos.</p>
+            <p><strong>Romanos:</strong> Nadie puede presumir de méritos: la gracia de Dios nos acoge gratuitamente por la fe.</p>
+            <p><strong>1 Corintios:</strong> El amor que construye al hermano vale más que cualquier elocuencia o carisma deslumbrante.</p>
+            <p><strong>2 Corintios:</strong> El poder divino resplandece con mayor pureza en nuestras vasijas de barro.</p>
+            <p><strong>Gálatas:</strong> Cristo nos hizo verdaderamente libres de la tiranía de la ley y los prejuicios.</p>
+            <p><strong>Filipenses:</strong> La alegría profunda se alimenta del despojo humilde de Jesús y de la amistad fraternal.</p>
+            <p><strong>1 Tesalonicenses:</strong> Dejamos los ídolos vacíos para esperar al Señor trabajando con paz y amor mutuo.</p>
+            <p><strong>Filemón:</strong> El amor de Cristo transforma a un esclavo en un hermano con plenitud de derechos.</p>
+            <p><strong>Colosenses:</strong> En Cristo habita toda la plenitud: no hay poder cósmico que pueda arrebatarnos su paz.</p>
+            <p><strong>Efesios:</strong> La cruz derribó todo muro de odio para formar una sola familia humana reconciliada.</p>
+            <p><strong>2 Tesalonicenses:</strong> Frente a rumores y fanatismos, serenidad: perseverar en el bien y en el trabajo diario.</p>
+            <p><strong>Pastorales:</strong> Cuidar la casa de Dios con una fe sólida, ministerios ordenados y vida intachable.</p>
+            <p><strong>Hebreos:</strong> Cristo es nuestro hermano y sacerdote compasivo que abrió para siempre el acceso a Dios.</p>
+            <p><strong>Juan:</strong> La Palabra de Dios se hizo carne para regalarnos vida eterna y abundante desde hoy mismo.</p>
+            <p><strong>1 Juan:</strong> Quien dice que ama a Dios pero no ama al prójimo en la práctica, vive en tinieblas.</p>
+            <p><strong>Santiago:</strong> La fe sin solidaridad concreta con el hambriento y el desvalido está muerta.</p>
+            <p><strong>1 Pedro:</strong> Aunque seamos incomprendidos en este mundo, pertenecemos para siempre a la familia de Dios.</p>
+            <p><strong>2 Pedro / Judas:</strong> La paciencia de Dios es para nuestra salvación; mantengámonos firmes en el amor.</p>
+            <p><strong>Apocalipsis:</strong> El Cordero degollado de pie venció al mal: los poderes opresores tienen los días contados.</p>
+          </div>
+        `
+      },
+      ejercicios: {
+        title: 'Dinámicas Prácticas de Aprendizaje en Grupo',
+        body: `
+          <div class="space-y-4">
+            <div class="p-3 bg-study-parchment dark:bg-study-midnight rounded-lg border border-study-border dark:border-study-borderDark">
+              <h5 class="font-bold text-xs text-study-gold uppercase mb-1">Taller 1: El Espejo de las Dos Cartas (Pablo y Santiago)</h5>
+              <p class="text-xs">Dividir al grupo en dos bandos. Un equipo lee Romanos 3,21-28 y el otro Santiago 2,14-26. Cada equipo formula tres argumentos sobre por qué su texto es vital para la vida cristiana hoy, concluyendo en un diálogo de síntesis integradora.</p>
+            </div>
+            <div class="p-3 bg-study-parchment dark:bg-study-midnight rounded-lg border border-study-border dark:border-study-borderDark">
+              <h5 class="font-bold text-xs text-study-gold uppercase mb-1">Taller 2: Diagnóstico de "Muros" Modernos (Efesios 2)</h5>
+              <p class="text-xs">Identificar en una pizarra o cartelera tres "muros de división" que existen hoy en nuestro barrio o comunidad (ej. racismo, exclusión económica, diferencias generacionales). Diseñar a la luz de Efesios tres acciones de reconciliación.</p>
+            </div>
+            <div class="p-3 bg-study-parchment dark:bg-study-midnight rounded-lg border border-study-border dark:border-study-borderDark">
+              <h5 class="font-bold text-xs text-study-gold uppercase mb-1">Taller 3: El Botiquín de Emergencia para la Esperanza (1 Pedro y Hebreos)</h5>
+              <p class="text-xs">Escribir una breve carta de aliento para una persona real o imaginaria que está pasando por una pérdida, enfermedad o soledad profunda, usando las ideas de Cristo como Sumo Sacerdote compasivo y la nube de testigos.</p>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    // VARIABLES DE ESTADO
+    let currentCategory = 'all';
+    let currentSelectedBook = booksData[0];
+    let appFontSize = 14;
+
+    // INICIALIZACIÓN
+    document.addEventListener('DOMContentLoaded', () => {
+      renderBooksGrid();
+      renderMatrixTable('ley');
+      renderGlossaryCards();
+      loadSavedNotes();
+      
+      // Chequeo de tema guardado
+      if (localStorage.getItem('nt_theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+      }
+    });
+
+    // RENDERIZADO DE LA BIBLIOTECA DE LIBROS
+    function renderBooksGrid() {
+      const grid = document.getElementById('booksGrid');
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const emptyBox = document.getElementById('emptyResults');
+      
+      grid.innerHTML = '';
+      
+      const filtered = booksData.filter(b => {
+        const matchesCategory = (currentCategory === 'all' || b.category === currentCategory);
+        const matchesSearch = !search || 
+          b.title.toLowerCase().includes(search) || 
+          b.phrase.toLowerCase().includes(search) || 
+          b.cristo.toLowerCase().includes(search) || 
+          b.comunidad.toLowerCase().includes(search) || 
+          b.keyPoints.some(k => k.toLowerCase().includes(search));
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        emptyBox.classList.remove('hidden');
+      } else {
+        emptyBox.classList.add('hidden');
+        filtered.forEach(book => {
+          const card = document.createElement('div');
+          card.className = "bg-white dark:bg-study-deep rounded-xl border border-study-border dark:border-study-borderDark p-5 hover:border-study-gold transition duration-200 shadow-sm flex flex-col justify-between cursor-pointer group";
+          card.onclick = () => openBookModal(book.id);
+
+          card.innerHTML = `
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-study-gold bg-study-parchment dark:bg-study-midnight px-2 py-0.5 rounded border border-study-border dark:border-study-borderDark">
+                  ${book.categoryLabel}
+                </span>
+                <div class="w-8 h-8 rounded-full bg-study-parchment dark:bg-study-midnight flex items-center justify-center text-study-gold group-hover:bg-study-gold group-hover:text-study-midnight transition">
+                  <i class="fa-solid ${book.icon} text-xs"></i>
+                </div>
+              </div>
+              <h3 class="text-base font-serif font-bold text-study-midnight dark:text-white group-hover:text-study-gold transition">
+                ${book.title}
+              </h3>
+              <p class="text-xs text-study-muted dark:text-gray-300 font-serif-body leading-relaxed line-clamp-3">
+                ${book.phrase}
+              </p>
+              <div class="space-y-1 pt-1">
+                ${book.keyPoints.slice(0, 2).map(kp => `
+                  <div class="text-[11px] text-gray-600 dark:text-gray-300 flex items-start gap-1.5">
+                    <i class="fa-solid fa-angle-right text-study-gold mt-0.5 text-[9px]"></i>
+                    <span class="line-clamp-1">${kp}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div class="pt-4 mt-3 border-t border-gray-100 dark:border-study-borderDark flex items-center justify-between text-xs font-semibold text-study-gold">
+              <span>Leer Ficha Didáctica</span>
+              <i class="fa-solid fa-arrow-right-long text-xs group-hover:translate-x-1 transition"></i>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+    }
+
+    // NAVEGACIÓN ENTRE PESTAÑAS
+    function navigateTab(tabName) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-nav').forEach(btn => {
+        btn.classList.remove('text-study-gold', 'bg-study-deep', 'border', 'border-study-gold/40');
+        btn.classList.add('text-gray-300');
+      });
+
+      const targetPane = document.getElementById(`section-${tabName}`);
+      const targetBtn = document.getElementById(`tab-btn-${tabName}`);
+      
+      if (targetPane) targetPane.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.classList.add('text-study-gold', 'bg-study-deep', 'border', 'border-study-gold/40');
+        targetBtn.classList.remove('text-gray-300');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // FILTRO POR CATEGORÍA
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(pill => {
+        pill.classList.remove('active', 'border-study-gold', 'bg-study-gold', 'text-study-midnight', 'font-bold');
+        pill.classList.add('bg-white', 'dark:bg-study-midnight', 'text-gray-700', 'dark:text-gray-200');
+      });
+      event.target.classList.add('active', 'border-study-gold', 'bg-study-gold', 'text-study-midnight', 'font-bold');
+      event.target.classList.remove('bg-white', 'dark:bg-study-midnight', 'text-gray-700', 'dark:text-gray-200');
+      renderBooksGrid();
+    }
+
+    function filterBooks() {
+      renderBooksGrid();
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      currentCategory = 'all';
+      document.querySelectorAll('.cat-pill').forEach((pill, idx) => {
+        if (idx === 0) {
+          pill.classList.add('active', 'border-study-gold', 'bg-study-gold', 'text-study-midnight', 'font-bold');
+        } else {
+          pill.classList.remove('active', 'border-study-gold', 'bg-study-gold', 'text-study-midnight', 'font-bold');
+          pill.classList.add('bg-white', 'dark:bg-study-midnight', 'text-gray-700', 'dark:text-gray-200');
+        }
+      });
+      renderBooksGrid();
+    }
+
+    // RENDERIZADO DE MATRIZ COMPARATIVA
+    function renderMatrixTable(themeKey) {
+      const data = matrixThemes[themeKey];
+      const table = document.getElementById('matrixComparisonTable');
+      if (!data || !table) return;
+
+      let html = `
+        <thead class="bg-study-parchmentAlt dark:bg-study-midnight border-b border-study-border dark:border-study-borderDark text-study-midnight dark:text-gray-200 font-serif">
+          <tr>
+            ${data.columns.map(col => `<th class="p-3 font-bold">${col}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-study-border dark:divide-study-borderDark font-serif-body">
+      `;
+
+      data.rows.forEach(row => {
+        html += `
+          <tr class="hover:bg-study-parchment dark:hover:bg-study-midnight/40 transition">
+            <td class="p-3 font-bold text-study-midnight dark:text-study-gold whitespace-nowrap">${row[0]}</td>
+            <td class="p-3 text-study-ink dark:text-gray-200">${row[1]}</td>
+            <td class="p-3 text-study-muted dark:text-gray-400 font-sans italic text-[11px]">${row[2]}</td>
+            <td class="p-3 text-study-wine dark:text-yellow-200/90 text-xs">${row[3]}</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody>`;
+      table.innerHTML = html;
+    }
+
+    // RENDERIZADO DEL GLOSARIO ACCESIBLE
+    function renderGlossaryCards() {
+      const container = document.getElementById('glossaryGrid');
+      const filter = (document.getElementById('glossaryFilter')?.value || '').toLowerCase().trim();
+      if (!container) return;
+      container.innerHTML = '';
+
+      const filtered = glossaryItems.filter(item => 
+        !filter || 
+        item.term.toLowerCase().includes(filter) || 
+        item.simple.toLowerCase().includes(filter) || 
+        item.detail.toLowerCase().includes(filter)
+      );
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "p-4 rounded-xl bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark space-y-2 hover:border-study-gold transition";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-greek text-sm font-bold text-study-gold">${item.greek}</span>
+            <span class="text-[10px] bg-white dark:bg-study-deep px-1.5 py-0.5 rounded text-study-muted dark:text-gray-400 font-sans">Koiné</span>
+          </div>
+          <h4 class="font-serif font-bold text-xs sm:text-sm text-study-midnight dark:text-white">${item.term}</h4>
+          <div class="text-[11px] font-bold text-study-wine dark:text-yellow-200/90 bg-white dark:bg-study-deep p-1.5 rounded border border-study-border dark:border-study-borderDark">
+            <i class="fa-solid fa-arrow-right text-[9px] mr-1"></i> ${item.simple}
+          </div>
+          <p class="text-xs text-study-muted dark:text-gray-300 font-serif-body leading-relaxed pt-1">
+            ${item.detail}
+          </p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterGlossaryCards() {
+      renderGlossaryCards();
+    }
+
+    // MODAL DE DETALLE DEL LIBRO
+    function openBookModal(bookId) {
+      const book = booksData.find(b => b.id === bookId);
+      if (!book) return;
+      currentSelectedBook = book;
+
+      document.getElementById('modalBookTitle').textContent = book.title;
+      document.getElementById('modalBookCategory').textContent = book.categoryLabel;
+      document.getElementById('modalBookRef').textContent = book.reference;
+      document.getElementById('modalBookIcon').innerHTML = `<i class="fa-solid ${book.icon}"></i>`;
+
+      switchModalTab('resumen');
+      document.getElementById('bookModal').classList.remove('hidden');
+    }
+
+    function closeBookModal() {
+      document.getElementById('bookModal').classList.add('hidden');
+    }
+
+    function switchModalTab(tabKey) {
+      document.querySelectorAll('.modal-tab-btn').forEach(btn => {
+        btn.classList.remove('border-study-gold', 'text-study-midnight', 'dark:text-study-gold');
+        btn.classList.add('border-transparent', 'text-study-muted', 'dark:text-gray-400');
+      });
+
+      const activeBtn = document.getElementById(`m-tab-${tabKey}`);
+      if (activeBtn) {
+        activeBtn.classList.add('border-study-gold', 'text-study-midnight', 'dark:text-study-gold');
+        activeBtn.classList.remove('border-transparent', 'text-study-muted', 'dark:text-gray-400');
+      }
+
+      const content = document.getElementById('modalBookContent');
+      const b = currentSelectedBook;
+
+      if (tabKey === 'resumen') {
+        content.innerHTML = `
+          <div class="p-3.5 bg-study-parchment dark:bg-study-midnight rounded-xl border-l-4 border-study-gold text-study-midnight dark:text-white font-serif text-sm">
+            «${b.phrase}»
+          </div>
+          <h4 class="font-bold text-xs uppercase text-study-gold tracking-wider pt-2">Puntos Cardinales del Escrito:</h4>
+          <ul class="space-y-2">
+            ${b.keyPoints.map(kp => `
+              <li class="flex items-start gap-2 text-xs sm:text-sm">
+                <i class="fa-solid fa-circle-check text-study-gold mt-1 text-xs"></i>
+                <span>${kp}</span>
+              </li>
+            `).join('')}
+          </ul>
+        `;
+      } else if (tabKey === 'cristo') {
+        content.innerHTML = `
+          <div class="space-y-3">
+            <h4 class="font-bold text-xs uppercase text-study-gold tracking-wider">El Rostro de Jesucristo en este Escrito:</h4>
+            <p class="leading-relaxed text-xs sm:text-sm">${b.cristo}</p>
+          </div>
+        `;
+      } else if (tabKey === 'comunidad') {
+        content.innerHTML = `
+          <div class="space-y-3">
+            <h4 class="font-bold text-xs uppercase text-study-gold tracking-wider">La Vida de la Comunidad y el Compromiso Ético:</h4>
+            <p class="leading-relaxed text-xs sm:text-sm">${b.comunidad}</p>
+          </div>
+        `;
+      } else if (tabKey === 'pedagogia') {
+        content.innerHTML = `
+          <div class="space-y-4">
+            <div class="p-4 bg-study-parchment dark:bg-study-midnight rounded-xl border border-study-border dark:border-study-borderDark">
+              <h5 class="font-bold text-xs text-study-wine dark:text-yellow-200 mb-1.5 flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-question"></i> Pregunta para Diálogo en Clase o Reflexión Personal:
+              </h5>
+              <p class="italic text-xs sm:text-sm">${b.pedagogia}</p>
+            </div>
+            <div class="text-xs text-study-muted dark:text-gray-400">
+              <strong>Tip de Estudio:</strong> Puedes copiar o imprimir este resumen para preparar una clase o añadir tus comentarios en la pestaña "Mi Cuaderno".
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function copyCurrentBookText() {
+      const b = currentSelectedBook;
+      const text = `${b.title} (${b.categoryLabel})\nFuente: ${b.reference}\n\nMensaje Clave:\n${b.phrase}\n\nJesucristo:\n${b.cristo}\n\nComunidad y Vida Ética:\n${b.comunidad}\n\nPregunta de Reflexión:\n${b.pedagogia}`;
+      
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      
+      alert('¡Ficha copiada al portapapeles!');
+    }
+
+    function printCurrentBook() {
+      window.print();
+    }
+
+    // MODAL DE TALLER DOCENTE
+    function openWorkshopModal(type) {
+      const item = workshopContent[type];
+      if (!item) return;
+      document.getElementById('workshopModalTitle').textContent = item.title;
+      document.getElementById('workshopModalBody').innerHTML = item.body;
+      document.getElementById('workshopModal').classList.remove('hidden');
+    }
+
+    function closeWorkshopModal() {
+      document.getElementById('workshopModal').classList.add('hidden');
+    }
+
+    function quickTour() {
+      document.getElementById('tourModal').classList.remove('hidden');
+    }
+
+    function closeTourModal() {
+      document.getElementById('tourModal').classList.add('hidden');
+    }
+
+    // GESTIÓN DEL CUADERNO DE ESTUDIO (LOCAL STORAGE)
+    function insertStudyTemplate() {
+      document.getElementById('noteSubject').value = 'Análisis Teológico: Evangelio según Marcos y la Cruz';
+      document.getElementById('noteText').value = 
+`1. IDEA O TEXTO ANALIZADO:
+Marcos 15,39: La confesión del centurión pagano frente al abandono de la cruz.
+
+2. CONTRASTES Y APRENDIZAJES CLAVE:
+- Los discípulos esperaban un mesías con poder y gloria militar.
+- Jesús revela a Dios en la entrega vulnerable, el silencio y el servicio.
+- Quien reconoce a Dios no es un teólogo ni un apóstol, sino un soldado extranjero.
+
+3. PREGUNTA PARA MI GRUPO / CLASE:
+¿Dónde buscamos hoy la presencia de Dios: en el poder y el prestigio, o al lado de quienes sufren?
+
+4. APLICACIÓN VITAL:
+Acompañar sin juzgar a personas que están viviendo situaciones de soledad o crisis profunda.`;
+    }
+
+    function saveCurrentNote() {
+      const subject = document.getElementById('noteSubject').value.trim();
+      const text = document.getElementById('noteText').value.trim();
+
+      if (!subject || !text) {
+        alert('Por favor escribe un título y contenido antes de guardar.');
+        return;
+      }
+
+      const notes = JSON.parse(localStorage.getItem('nt_study_notes') || '[]');
+      const newNote = {
+        id: Date.now(),
+        date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
+        subject,
+        text
+      };
+
+      notes.unshift(newNote);
+      localStorage.setItem('nt_study_notes', JSON.stringify(notes));
+      loadSavedNotes();
+      
+      document.getElementById('noteStatus').innerHTML = '<span class="text-green-600 font-bold"><i class="fa-solid fa-check"></i> ¡Nota guardada con éxito!</span>';
+      setTimeout(() => {
+        document.getElementById('noteStatus').innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i> Los apuntes se guardan en tu navegador';
+      }, 3000);
+    }
+
+    function loadSavedNotes() {
+      const container = document.getElementById('savedNotesContainer');
+      const notes = JSON.parse(localStorage.getItem('nt_study_notes') || '[]');
+      if (!container) return;
+
+      container.innerHTML = '';
+      if (notes.length === 0) {
+        container.innerHTML = '<p class="text-study-muted dark:text-gray-400 italic text-[11px]">No tienes notas guardadas todavía. Escribe una y haz clic en "Guardar Nota".</p>';
+        return;
+      }
+
+      notes.forEach(n => {
+        const item = document.createElement('div');
+        item.className = "p-2.5 rounded-lg bg-study-parchment dark:bg-study-midnight border border-study-border dark:border-study-borderDark space-y-1";
+        item.innerHTML = `
+          <div class="flex items-center justify-between text-[10px] text-study-muted dark:text-gray-400">
+            <span><i class="fa-regular fa-calendar mr-1"></i>${n.date}</span>
+            <button onclick="deleteNote(${n.id})" class="text-study-wine hover:underline" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+          </div>
+          <h5 class="font-bold text-xs text-study-midnight dark:text-study-gold cursor-pointer hover:underline" onclick="viewSavedNote(${n.id})">${n.subject}</h5>
+          <p class="text-[11px] text-gray-600 dark:text-gray-300 line-clamp-2">${n.text}</p>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function viewSavedNote(id) {
+      const notes = JSON.parse(localStorage.getItem('nt_study_notes') || '[]');
+      const note = notes.find(n => n.id === id);
+      if (note) {
+        document.getElementById('noteSubject').value = note.subject;
+        document.getElementById('noteText').value = note.text;
+      }
+    }
+
+    function deleteNote(id) {
+      let notes = JSON.parse(localStorage.getItem('nt_study_notes') || '[]');
+      notes = notes.filter(n => n.id !== id);
+      localStorage.setItem('nt_study_notes', JSON.stringify(notes));
+      loadSavedNotes();
+    }
+
+    function clearAllNotes() {
+      if (confirm('¿Deseas eliminar todas las notas guardadas?')) {
+        localStorage.removeItem('nt_study_notes');
+        loadSavedNotes();
+      }
+    }
+
+    function exportCurrentNote() {
+      const subject = document.getElementById('noteSubject').value.trim() || 'Apunte_Teologia_NT';
+      const text = document.getElementById('noteText').value.trim();
+      if (!text) {
+        alert('No hay contenido para descargar.');
+        return;
+      }
+
+      const blob = new Blob([`${subject.toUpperCase()}\n\n${text}`], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${subject.replace(/\s+/g, '_')}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // UTILIDADES: TEMA OSCURO Y TAMAÑO DE FUENTE
+    function toggleDarkMode() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('nt_theme', isDark ? 'dark' : 'light');
+      document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+
+    function adjustFontSize(delta) {
+      appFontSize = Math.min(18, Math.max(12, appFontSize + delta));
+      document.querySelectorAll('.font-serif-body').forEach(el => {
+        el.style.fontSize = `${appFontSize}px`;
+      });
+    }
+
+    function toggleMobileNav() {
+      const menu = document.getElementById('mobile-nav');
+      menu.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
